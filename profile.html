@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Perfil - Proyectos Solidarios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles/styles.css"/>
+</head>
+<body class="subpage">
+  <a href="index.html" class="back-link">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Inicio
+  </a>
+
+  <div class="profile-card">
+    <div class="profile-header">
+      <button class="profile-grid-btn" aria-label="Opciones">
+        <svg width="16" height="16" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+      </button>
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80" alt="Sarah Johnson"/>
+        </div>
+        <div class="online-dot"></div>
+      </div>
+    </div>
+
+    <div class="profile-body">
+      <button class="edit-profile-btn" id="edit-profile-btn">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Editar Perfil
+      </button>
+
+      <h2 class="profile-name" id="profile-name">Sarah Johnson</h2>
+      <p class="profile-role" id="profile-role">Senior Product Designer</p>
+
+      <div class="profile-section" id="profile-about-section">
+        <h4>ABOUT</h4>
+        <p id="profile-about"></p>
+      </div>
+
+      <div class="profile-section">
+        <h4>CONTACT INFORMATION</h4>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="ci-icon ci-blue">
+              <svg width="16" height="16" fill="none" stroke="#1A56E8" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+            </div>
+            <div><span class="ci-label">Email</span><span class="ci-value" id="profile-email">sarah.johnson@example.com</span></div>
+          </div>
+          <div class="contact-item" id="contact-phone" style="display:none">
+            <div class="ci-icon ci-green">
+              <svg width="16" height="16" fill="none" stroke="#16A34A" stroke-width="1.8" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.07 2.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92v2z"/></svg>
+            </div>
+            <div><span class="ci-label">Teléfono</span><span class="ci-value" id="profile-phone"></span></div>
+          </div>
+          <div class="contact-item" id="contact-linktree" style="display:none">
+            <div class="ci-icon ci-purple">
+              <svg width="16" height="16" fill="none" stroke="#7C3AED" stroke-width="1.8" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+            </div>
+            <div><span class="ci-label">Sitio Web / LinkTree</span><span class="ci-value" id="profile-linktree"></span></div>
+          </div>
+          <div class="contact-item" id="contact-instagram" style="display:none">
+            <div class="ci-icon" style="background:#fce4ec">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#E1306C" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="#E1306C" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="#E1306C"/></svg>
+            </div>
+            <div><span class="ci-label">Instagram</span><span class="ci-value" id="profile-instagram"></span></div>
+          </div>
+          <div class="contact-item" id="contact-linkedin" style="display:none">
+            <div class="ci-icon" style="background:#e3f2fd">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="4" stroke="#0A66C2" stroke-width="1.8"/><path d="M7 10v7M7 7v.5" stroke="#0A66C2" stroke-width="2" stroke-linecap="round"/><path d="M11 17v-3.5a2.5 2.5 0 015 0V17M11 10v7" stroke="#0A66C2" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </div>
+            <div><span class="ci-label">LinkedIn</span><span class="ci-value" id="profile-linkedin"></span></div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon ci-orange">
+              <svg width="16" height="16" fill="none" stroke="#F05A28" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            </div>
+            <div><span class="ci-label">Miembro desde</span><span class="ci-value" id="profile-since">January 2021</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <h4>SECURITY</h4>
+        <div class="security-row">
+          <div class="ci-icon ci-red">
+            <svg width="16" height="16" fill="none" stroke="#EF4444" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+          <div class="sec-info">
+            <span class="ci-label">Password</span>
+            <span class="ci-value sec-dots">••••••••</span>
+          </div>
+          <button class="sec-edit-btn" aria-label="Editar contraseña">
+            <svg width="14" height="14" fill="none" stroke="#9CA3AF" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <button class="logout-btn" id="logout-btn">Cerrar Sesión</button>
+    </div>
+  </div>
+
+  <script src="scripts/profile.js"></script>
+</body>
+</html>

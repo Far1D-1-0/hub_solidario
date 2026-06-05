@@ -1,0 +1,324 @@
+    body.catalog-page {
+      background: linear-gradient(160deg, #0f2d70 0%, #1A56E8 45%, #1d4ed8 100%);
+      min-height: 100vh;
+    }
+
+    /* ── Header ───────────────────────────────────── */
+    .catalog-header {
+      text-align: center;
+      padding: 48px 24px 36px;
+      color: white;
+    }
+    .catalog-header h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -.4px;
+    }
+    .catalog-header p {
+      font-size: .95rem;
+      opacity: .75;
+      margin-top: 8px;
+    }
+    .catalog-stats-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+    .catalog-stat-chip {
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: .8rem;
+      font-weight: 600;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ── Search + filters ─────────────────────────── */
+    .catalog-search-wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .search-bar {
+      background: white;
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,.18);
+      margin-bottom: 14px;
+    }
+    .search-bar input {
+      flex: 1; border: none; outline: none;
+      font-size: .92rem; font-family: inherit; color: #111827; background: none;
+    }
+    .search-bar input::placeholder { color: #9CA3AF; }
+    .search-clear {
+      background: none; border: none; cursor: pointer; padding: 2px;
+      color: #9CA3AF; display: none; align-items: center;
+    }
+    .search-clear.show { display: flex; }
+    .search-clear:hover { color: #6B7280; }
+
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 2px;
+    }
+    .filter-pills::-webkit-scrollbar { display: none; }
+    .filter-pill {
+      white-space: nowrap;
+      padding: 7px 16px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(255,255,255,.45);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.85);
+      cursor: pointer;
+      font-size: .8rem;
+      font-weight: 500;
+      font-family: inherit;
+      transition: all .15s;
+    }
+    .filter-pill:hover {
+      background: rgba(255,255,255,.18);
+      border-color: rgba(255,255,255,.75);
+      color: white;
+    }
+    .filter-pill.active {
+      background: white;
+      border-color: white;
+      color: #1A56E8;
+      font-weight: 700;
+    }
+
+    /* ── Grid area ────────────────────────────────── */
+    .catalog-body {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+    }
+    .catalog-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .catalog-count {
+      font-size: .84rem;
+      color: rgba(255,255,255,.7);
+      font-weight: 500;
+    }
+    .catalog-sort {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: .8rem;
+      color: white;
+      font-family: inherit;
+      cursor: pointer;
+      outline: none;
+      background-clip: padding-box;
+    }
+    .catalog-sort option { background: #1A56E8; }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 0;
+      color: rgba(255,255,255,.6);
+      font-size: .95rem;
+    }
+
+    /* ── Admin delete button ─────────────────────── */
+    .cat-admin-del {
+      display: none;
+      position: absolute;
+      top: 10px; right: 10px;
+      width: 32px; height: 32px;
+      background: rgba(239,68,68,.85);
+      backdrop-filter: blur(4px);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background .15s, transform .1s;
+    }
+    .cat-admin-del:hover { background: #DC2626; transform: scale(1.08); }
+    body.is-admin .cat-admin-del { display: flex; }
+
+    /* ── Confirm modal ───────────────────────────── */
+    #admin-del-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    #admin-del-overlay.show { display: flex; }
+    #admin-del-modal {
+      background: white;
+      border-radius: 18px;
+      padding: 28px 26px 22px;
+      max-width: 400px;
+      width: calc(100% - 40px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    }
+    #admin-del-modal .adm-icon {
+      width: 48px; height: 48px;
+      background: #FEF2F2;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: #EF4444;
+      margin-bottom: 14px;
+    }
+    #admin-del-modal h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: .97rem;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 6px;
+    }
+    #admin-del-modal p { font-size: .83rem; color: #6B7280; line-height: 1.55; margin-bottom: 4px; }
+    #admin-del-modal .adm-warn { font-size: .78rem; color: #EF4444; margin-bottom: 20px; }
+    .adm-foot { display: flex; gap: 10px; }
+    .adm-btn-cancel {
+      flex: 1; background: #F1F5F9; color: #374151; border: none;
+      border-radius: 10px; padding: 10px; font-size: .86rem;
+      font-weight: 600; font-family: inherit; cursor: pointer;
+    }
+    .adm-btn-cancel:hover { background: #E2E8F0; }
+    .adm-btn-del {
+      flex: 1; background: #EF4444; color: white; border: none;
+      border-radius: 10px; padding: 10px; font-size: .86rem;
+      font-weight: 700; font-family: inherit; cursor: pointer;
+    }
+    .adm-btn-del:hover { background: #DC2626; }
+
+    /* ── Project cards ───────────────────────────── */
+    .cat-card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,.12);
+      transition: transform .22s, box-shadow .22s;
+      display: flex;
+      flex-direction: column;
+    }
+    .cat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 32px rgba(0,0,0,.2);
+    }
+
+    .cat-img-wrap {
+      position: relative;
+      height: 196px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .cat-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .35s;
+    }
+    .cat-card:hover .cat-img-wrap img { transform: scale(1.05); }
+
+    .cat-badge {
+      position: absolute;
+      top: 12px; left: 12px;
+      padding: 4px 11px;
+      border-radius: 20px;
+      font-size: .7rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: .3px;
+    }
+    .cat-volunteers-chip {
+      position: absolute;
+      bottom: 10px; right: 10px;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(4px);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: .7rem;
+      font-weight: 600;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .cat-body {
+      padding: 18px 18px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .cat-title {
+      font-size: .97rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 7px;
+      line-height: 1.3;
+    }
+    .cat-desc {
+      font-size: .81rem;
+      color: #6B7280;
+      line-height: 1.55;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .cat-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .76rem;
+      color: #9CA3AF;
+      padding-top: 12px;
+      border-top: 1px solid #F3F4F6;
+      margin-bottom: 12px;
+    }
+    .cat-meta svg { flex-shrink: 0; }
+    .cat-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .83rem;
+      font-weight: 700;
+      color: #F05A28;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      font-family: inherit;
+      transition: gap .15s, color .15s;
+    }
+    .cat-link:hover { color: #c9451a; gap: 9px; }
+
+    @media (max-width: 900px)  { .catalog-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px)  { .catalog-grid { grid-template-columns: 1fr; } }

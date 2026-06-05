@@ -1,0 +1,24 @@
+    /* Password field – pink/purple border */
+    #login-pass {
+      border: 1.5px solid #C680E8 !important;
+      background: white !important;
+    }
+    #login-pass:focus {
+      border-color: #A855F7 !important;
+      box-shadow: 0 0 0 3px rgba(168,85,247,.15) !important;
+    }
+
+    .lp-icon {
+      width: 60px; height: 60px;
+      background: #5AABF5;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+    }
+
+    .btn-login { background: #4AAFF5; color: white; }
+    .btn-login:hover { background: #2E9EF0; }
+
+    .forgot-pass { color: #06C4E0; }
+    .forgot-pass:hover { color: #0EA5C9; }
+    .auth-alt a { color: #06C4E0; }

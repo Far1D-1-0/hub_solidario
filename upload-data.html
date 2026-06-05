@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cargar Datos del Proyecto - Proyectos Solidarios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles/styles.css"/>
+  <link rel="stylesheet" href="styles/upload-data.css"/>
+</head>
+<body class="upage">
+
+  <button id="menu-btn" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+  <div id="nav-overlay"></div>
+  <nav id="side-nav" aria-label="Menú principal">
+    <div id="nav-logo">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="rgba(255,255,255,.2)"/><path d="M8 20 L16 10 L24 20" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 20 L16 14 L20 20" fill="white"/></svg>
+      <div class="logo-text"><strong>Proyectos</strong><span>Solidarios</span></div>
+    </div>
+    <h3>Menú de Navegación</h3>
+    <ul class="nav-links">
+      <li><a href="index.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg><div class="link-info"><strong>Inicio</strong><span>Página principal</span></div></a></li>
+      <li><a href="feed.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 11h16M4 6h16M4 16h10"/></svg><div class="link-info"><strong>Feed</strong><span>Actividades recientes</span></div></a></li>
+      <li><a href="catalog.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><div class="link-info"><strong>Catálogo</strong><span>Todos los proyectos</span></div></a></li>
+      <li><a href="project-form.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><div class="link-info"><strong>Registrar</strong><span>Nueva iniciativa</span></div></a></li>
+      <li><a href="login.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="link-info"><strong>Perfil</strong><span>Gestiona tu cuenta</span></div></a></li>
+    </ul>
+    <li id="nav-admin-link" style="display:none;list-style:none">
+      <a href="admin.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="link-info"><strong>Admin</strong><span>Panel de control</span></div></a>
+    </li>
+    <div id="user-panel" class="nav-user-panel">
+      <div class="nav-user-avatar" id="nav-avatar">U</div>
+      <div class="nav-user-info"><strong id="nav-username">Usuario</strong><span>En línea</span></div>
+      <button class="nav-logout-btn" id="nav-logout" title="Cerrar sesión">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- hidden file input -->
+  <input type="file" id="file-input" accept=".json,.csv" style="display:none"/>
+
+  <!-- Header -->
+  <div class="u-header">
+    <a id="u-back" href="project-page.html" class="u-back">
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Volver al proyecto
+    </a>
+    <h1>Panel de Datos del Proyecto</h1>
+    <p id="u-proj-name">Carga archivos de datos para actualizar la información del proyecto en la plataforma</p>
+    <div class="u-info-box">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <div>
+        <strong>Formatos soportados</strong>
+        Puedes cargar archivos en formato JSON o CSV. Los datos se guardan en el navegador y actualizan la vista del proyecto en tiempo real.
+      </div>
+    </div>
+    <button class="u-file-btn" id="u-file-btn">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Seleccionar Archivo
+    </button>
+  </div>
+
+  <!-- Orange section -->
+  <div class="u-orange">
+    <div class="u-inner">
+      <div class="u-tabs" id="u-tabs">
+        <button class="u-tab active" data-fmt="json">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          JSON
+        </button>
+        <button class="u-tab" data-fmt="csv">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+          CSV
+        </button>
+      </div>
+
+      <!-- JSON panel -->
+      <div class="u-import-card" id="panel-json">
+        <h3>Importar desde JSON</h3>
+        <p class="u-ic-sub">Pega tu archivo JSON con la información actualizada del proyecto</p>
+        <textarea class="u-textarea" id="json-input" placeholder='{"beneficiarios": 520, "voluntarios": 47, "actividades": 64, ...}'></textarea>
+        <p class="u-error-msg" id="json-error">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span id="json-error-text">JSON inválido.</span>
+        </p>
+        <div class="u-import-actions">
+          <button class="u-btn-import" id="btn-import-json">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Importar Proyectos
+          </button>
+          <button class="u-btn-template" id="btn-dl-json">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Descargar Plantilla JSON
+          </button>
+        </div>
+      </div>
+
+      <!-- CSV panel -->
+      <div class="u-import-card" id="panel-csv" style="display:none">
+        <h3>Importar desde CSV</h3>
+        <p class="u-ic-sub">Pega el contenido de tu archivo CSV con las publicaciones del proyecto</p>
+        <div class="u-csv-hint">
+          <span class="csv-header">titulo,fecha,tipo</span><br>
+          "Celebramos 500 comidas en un día","10 de marzo, 2026","Artículo"<br>
+          "Testimonio de Laura M.","5 de marzo, 2026","Testimonio"<br>
+          "Informe mensual de impacto","1 de marzo, 2026","Reporte"
+        </div>
+        <textarea class="u-textarea" id="csv-input" placeholder="titulo,fecha,tipo&#10;&quot;Mi publicación&quot;,&quot;10 de marzo, 2026&quot;,Artículo" style="min-height:140px"></textarea>
+        <p class="u-error-msg" id="csv-error">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span id="csv-error-text">CSV inválido.</span>
+        </p>
+        <div class="u-import-actions">
+          <button class="u-btn-import" id="btn-import-csv">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Importar Publicaciones
+          </button>
+          <button class="u-btn-template" id="btn-dl-csv">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Descargar Plantilla CSV
+          </button>
+        </div>
+      </div>
+
+      <!-- Preview of imported data -->
+      <div class="u-preview-card" id="u-preview">
+        <h4>
+          <svg width="16" height="16" fill="none" stroke="#16A34A" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          Vista previa de los datos importados
+        </h4>
+        <div class="u-preview-grid" id="preview-stats"></div>
+        <div id="preview-pubs"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Schema reference -->
+  <div class="u-blue">
+    <div class="u-inner">
+      <div class="u-schema-card">
+        <h3>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Estructura de datos esperada
+        </h3>
+        <div class="u-schema-tabs">
+          <button class="u-schema-tab active" id="stab-json" onclick="showSchema('json')">JSON completo</button>
+          <button class="u-schema-tab" id="stab-csv" onclick="showSchema('csv')">CSV publicaciones</button>
+        </div>
+        <pre class="u-code" id="schema-json"><span class="cmt">// Todos los campos son opcionales — solo incluye los que quieres actualizar</span>
+{
+  <span class="key">"beneficiarios"</span>:         <span class="num">520</span>,           <span class="cmt">// Número de beneficiarios activos</span>
+  <span class="key">"beneficiarios_cambio"</span>:   <span class="str">"+24% vs. inicio"</span>,
+  <span class="key">"voluntarios"</span>:            <span class="num">47</span>,
+  <span class="key">"voluntarios_cambio"</span>:     <span class="str">"+12 este mes"</span>,
+  <span class="key">"actividades"</span>:            <span class="num">64</span>,
+  <span class="key">"actividades_periodo"</span>:    <span class="str">"Último semestre"</span>,
+  <span class="key">"metrica4_valor"</span>:         <span class="str">"93,600"</span>,       <span class="cmt">// 4ta métrica (comidas, km, etc.)</span>
+  <span class="key">"metrica4_label"</span>:         <span class="str">"Comidas servidas"</span>,
+  <span class="key">"metrica4_periodo"</span>:       <span class="str">"Total proyecto"</span>,
+  <span class="key">"progreso"</span>: [                              <span class="cmt">// Barras de progreso</span>
+    { <span class="key">"label"</span>: <span class="str">"Meta de beneficiarios (520/600)"</span>, <span class="key">"pct"</span>: <span class="num">87</span> },
+    { <span class="key">"label"</span>: <span class="str">"Objetivo de voluntarios (47/50)"</span>,  <span class="key">"pct"</span>: <span class="num">94</span> }
+  ],
+  <span class="key">"publicaciones"</span>: [
+    { <span class="key">"titulo"</span>: <span class="str">"Celebramos 500 comidas en un día"</span>, <span class="key">"fecha"</span>: <span class="str">"10 de marzo, 2026"</span>, <span class="key">"tipo"</span>: <span class="str">"Artículo"</span> },
+    { <span class="key">"titulo"</span>: <span class="str">"Informe mensual de impacto"</span>,        <span class="key">"fecha"</span>: <span class="str">"1 de marzo, 2026"</span>,  <span class="key">"tipo"</span>: <span class="str">"Reporte"</span>  }
+  ],
+  <span class="key">"grafica_meses"</span>:        [<span class="str">"Oct"</span>, <span class="str">"Nov"</span>, <span class="str">"Dic"</span>, <span class="str">"Ene"</span>, <span class="str">"Feb"</span>, <span class="str">"Mar"</span>],
+  <span class="key">"grafica_beneficiarios"</span>: [<span class="num">435</span>, <span class="num">455</span>, <span class="num">462</span>, <span class="num">472</span>, <span class="num">465</span>, <span class="num">476</span>],
+  <span class="key">"grafica_actividades"</span>:   [<span class="num">8</span>, <span class="num">10</span>, <span class="num">12</span>, <span class="num">11</span>, <span class="num">14</span>, <span class="num">9</span>]
+}</pre>
+        <pre class="u-code" id="schema-csv" style="display:none"><span class="cmt"># Solo actualiza las publicaciones del proyecto</span>
+<span class="key">titulo</span>,<span class="key">fecha</span>,<span class="key">tipo</span>
+<span class="str">"Celebramos 500 comidas servidas en un solo día"</span>,<span class="str">"10 de marzo, 2026"</span>,<span class="str">Artículo</span>
+<span class="str">"Este proyecto salvó a mi familia - Testimonio de Laura M."</span>,<span class="str">"5 de marzo, 2026"</span>,<span class="str">Testimonio</span>
+<span class="str">"Informe mensual de impacto - Febrero 2026"</span>,<span class="str">"1 de marzo, 2026"</span>,<span class="str">Reporte</span>
+<span class="str">"Feria comunitaria - Próxima semana"</span>,<span class="str">"28 de febrero, 2026"</span>,<span class="str">Evento</span>
+
+<span class="cmt"># Tipos válidos: Artículo | Testimonio | Reporte | Evento</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="u-toast">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="u-toast-msg">Datos importados correctamente</span>
+  </div>
+
+  <script src="scripts/main.js"></script>
+  <script src="scripts/upload-data.js"></script>
+</body>
+</html>

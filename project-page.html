@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel del proyecto - Proyectos Solidarios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles/styles.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="styles/project-page.css"/>
+</head>
+<body class="proj-page">
+
+  <button id="menu-btn" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+  <div id="nav-overlay"></div>
+  <nav id="side-nav" aria-label="Menú principal">
+    <div id="nav-logo">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="rgba(255,255,255,.2)"/><path d="M8 20 L16 10 L24 20" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 20 L16 14 L20 20" fill="white"/></svg>
+      <div class="logo-text"><strong>Proyectos</strong><span>Solidarios</span></div>
+    </div>
+    <h3>Menú de Navegación</h3>
+    <ul class="nav-links">
+      <li><a href="index.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg><div class="link-info"><strong>Inicio</strong><span>Página principal</span></div></a></li>
+      <li><a href="feed.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 11h16M4 6h16M4 16h10"/></svg><div class="link-info"><strong>Feed</strong><span>Actividades recientes</span></div></a></li>
+      <li><a href="catalog.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><div class="link-info"><strong>Catálogo</strong><span>Todos los proyectos</span></div></a></li>
+      <li><a href="project-form.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><div class="link-info"><strong>Registrar</strong><span>Nueva iniciativa</span></div></a></li>
+      <li><a href="login.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="link-info"><strong>Perfil</strong><span>Gestiona tu cuenta</span></div></a></li>
+    </ul>
+    <li id="nav-admin-link" style="display:none;list-style:none">
+      <a href="admin.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="link-info"><strong>Admin</strong><span>Panel de control</span></div></a>
+    </li>
+    <div id="user-panel" class="nav-user-panel">
+      <div class="nav-user-avatar" id="nav-avatar">U</div>
+      <div class="nav-user-info"><strong id="nav-username">Usuario</strong><span>En línea</span></div>
+      <button class="nav-logout-btn" id="nav-logout" title="Cerrar sesión">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Customize panel overlay -->
+  <div id="pp-panel-overlay"></div>
+  <aside id="pp-customize-panel" role="dialog" aria-label="Personalizar página">
+    <div class="pp-panel-head">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      <h2>Personalizar página</h2>
+      <button class="pp-panel-close" id="pp-panel-close" aria-label="Cerrar">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="pp-panel-body">
+      <!-- Palettes -->
+      <div class="pp-panel-section">
+        <h3>Paleta de colores</h3>
+        <div class="palette-grid" id="palette-grid">
+          <button class="palette-btn active" data-palette="default">
+            <div class="palette-swatch" style="background:#1E293B"></div>
+            Neutro
+          </button>
+          <button class="palette-btn" data-palette="blue">
+            <div class="palette-swatch" style="background:#1A56E8"></div>
+            Azul
+          </button>
+          <button class="palette-btn" data-palette="green">
+            <div class="palette-swatch" style="background:#16A34A"></div>
+            Verde
+          </button>
+          <button class="palette-btn" data-palette="orange">
+            <div class="palette-swatch" style="background:#EA580C"></div>
+            Naranja
+          </button>
+          <button class="palette-btn" data-palette="purple">
+            <div class="palette-swatch" style="background:#7C3AED"></div>
+            Morado
+          </button>
+          <button class="palette-btn" data-palette="rose">
+            <div class="palette-swatch" style="background:#E11D48"></div>
+            Rosa
+          </button>
+        </div>
+      </div>
+
+      <!-- Widgets visibility -->
+      <div class="pp-panel-section">
+        <h3>Secciones visibles</h3>
+        <div class="widget-toggle-list" id="widget-toggle-list">
+          <!-- filled by JS -->
+        </div>
+        <div class="drag-hint">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px"><circle cx="9" cy="5" r="1" fill="currentColor"/><circle cx="9" cy="12" r="1" fill="currentColor"/><circle cx="9" cy="19" r="1" fill="currentColor"/><circle cx="15" cy="5" r="1" fill="currentColor"/><circle cx="15" cy="12" r="1" fill="currentColor"/><circle cx="15" cy="19" r="1" fill="currentColor"/></svg>
+          <span>Arrastra las secciones en la página para reordenarlas mientras el modo edición está activo.</span>
+        </div>
+      </div>
+    </div>
+    <div class="pp-panel-foot">
+      <button class="btn-save-settings" id="btn-save-settings">Guardar cambios</button>
+      <button class="btn-cancel-settings" id="btn-cancel-settings">Cancelar</button>
+    </div>
+  </aside>
+
+  <!-- Page content -->
+  <main class="pp-wrap" id="pp-main">
+    <div class="pp-platform-label">Plataforma de Impacto Social &nbsp;/&nbsp; <span>Panel del proyecto</span></div>
+
+    <!-- Cover image -->
+    <div class="pp-cover-wrap">
+      <img id="pp-cover" class="pp-cover" src="" alt="Portada del proyecto"/>
+      <button class="pp-cover-edit-btn" id="btn-edit-cover">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Cambiar imagen
+      </button>
+    </div>
+
+    <!-- Delete confirmation modal -->
+    <div id="del-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1300;align-items:center;justify-content:center">
+      <div style="background:white;border-radius:18px;padding:32px 28px 24px;width:100%;max-width:420px;margin:20px;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+        <div style="width:52px;height:52px;border-radius:14px;background:#FEF2F2;display:flex;align-items:center;justify-content:center;color:#EF4444;margin-bottom:16px">
+          <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+        </div>
+        <h3 style="font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:800;color:#111827;margin-bottom:8px">¿Eliminar este proyecto?</h3>
+        <p style="font-size:.85rem;color:#6B7280;line-height:1.55;margin-bottom:8px">Estás a punto de eliminar <strong id="del-proj-name" style="color:#111827"></strong>.</p>
+        <p style="font-size:.82rem;color:#EF4444;margin-bottom:24px">Esta acción no se puede deshacer. El proyecto se eliminará del catálogo permanentemente.</p>
+        <div style="display:flex;gap:10px">
+          <button id="del-cancel" style="flex:1;background:#F1F5F9;color:#374151;border:none;border-radius:10px;padding:11px;font-size:.88rem;font-weight:600;font-family:inherit;cursor:pointer">Cancelar</button>
+          <button id="del-confirm" style="flex:1;background:#EF4444;color:white;border:none;border-radius:10px;padding:11px;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer">Sí, eliminar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image edit modal -->
+    <div id="img-modal-overlay">
+      <div id="img-modal">
+        <h3>Cambiar imagen de portada</h3>
+        <p>Sube una imagen o ingresa una URL. Se guarda solo para tu proyecto.</p>
+        <img id="img-preview" class="img-modal-preview" src="" alt="Vista previa"/>
+        <label class="img-field-label">URL de la imagen</label>
+        <input class="img-url-input" id="img-url-input" type="text" placeholder="https://ejemplo.com/mi-imagen.jpg"/>
+        <div class="img-divider">o</div>
+        <button class="img-upload-btn" id="img-upload-btn">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Subir imagen desde mi dispositivo
+        </button>
+        <input type="file" id="img-file-input" accept="image/*" style="display:none"/>
+        <div class="img-modal-foot">
+          <button class="img-btn-cancel" id="img-btn-cancel">Cancelar</button>
+          <button class="img-btn-save" id="img-btn-save">Guardar imagen</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="pp-hero">
+      <h1 class="pp-title" id="pp-title">Cargando...</h1>
+      <div class="pp-leader-row">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span>Líder: <strong id="pp-leader"></strong></span>
+      </div>
+      <p class="pp-hero-desc" id="pp-hero-desc"></p>
+    </div>
+
+    <!-- Leader bar -->
+    <div id="pp-leader-bar">
+      <button id="btn-delete-project" title="Eliminar proyecto" aria-label="Eliminar proyecto" style="display:none;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);border-radius:10px;width:36px;height:36px;flex-shrink:0;cursor:pointer;display:none;align-items:center;justify-content:center;transition:background .15s,color .15s">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+      </button>
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <div class="lbar-text">
+        <strong>Eres el líder de este proyecto</strong>
+        Personaliza el diseño y las secciones de tu página
+      </div>
+      <a class="btn-customize" id="btn-upload-data" href="#" style="text-decoration:none">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Cargar datos
+      </a>
+      <button class="btn-customize" id="btn-open-panel">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Personalizar
+      </button>
+    </div>
+
+    <!-- Widgets -->
+    <div id="pp-widgets">
+
+      <!-- Widget: Description -->
+      <div class="pp-widget" data-widget-id="description" draggable="false">
+        <div class="pp-section-title">Descripción del Proyecto</div>
+        <div class="pp-desc-body">
+          <div class="pp-desc-section">
+            <div class="pp-desc-heading">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Acerca del proyecto
+            </div>
+            <p class="pp-desc-text blue-tone" id="desc-about"></p>
+          </div>
+          <div class="pp-desc-section">
+            <div class="pp-desc-heading">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Objetivos del proyecto
+            </div>
+            <ul class="pp-obj-list" id="desc-objectives"></ul>
+          </div>
+          <div class="pp-desc-section">
+            <div class="pp-desc-heading">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+              Comunidad beneficiada
+            </div>
+            <p class="pp-desc-text blue-tone" id="desc-community"></p>
+          </div>
+          <div class="pp-desc-section" style="margin-bottom:0">
+            <div class="pp-desc-heading">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              Modelo de operación
+            </div>
+            <div class="pp-op-grid" id="desc-operation"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Widget: Dashboard -->
+      <div class="pp-widget" data-widget-id="dashboard" draggable="false">
+        <div class="pp-section-title">Dashboard de Impacto</div>
+        <div class="pp-dash-body">
+          <div class="pp-stat-cards" id="dash-stats"></div>
+          <div class="pp-charts-row">
+            <div class="pp-chart-box">
+              <h4>Evolución de beneficiarios</h4>
+              <canvas id="chart-beneficiaries"></canvas>
+            </div>
+            <div class="pp-chart-box">
+              <h4>Actividades realizadas</h4>
+              <canvas id="chart-activities"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Widget: Progress -->
+      <div class="pp-widget" data-widget-id="progress" draggable="false">
+        <div class="pp-section-title">Progreso del proyecto</div>
+        <div class="pp-prog-body" id="prog-body"></div>
+      </div>
+
+      <!-- Widget: Content -->
+      <div class="pp-widget" data-widget-id="content" draggable="false">
+        <div class="pp-section-title">Contenido del Proyecto</div>
+        <div class="pp-content-grid" id="content-grid"></div>
+      </div>
+
+      <!-- Widget: Publications -->
+      <div class="pp-widget" data-widget-id="publications" draggable="false">
+        <div class="pp-section-title">Últimas publicaciones</div>
+        <div class="pp-pub-body" id="pub-body"></div>
+      </div>
+
+    </div><!-- /pp-widgets -->
+  </main>
+
+  <script src="scripts/main.js"></script>
+  <script src="scripts/project-page.js"></script>
+</body>
+</html>

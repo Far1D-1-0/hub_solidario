@@ -1,0 +1,304 @@
+    body.upage { background: #1a3a8f; min-height: 100vh; }
+
+    /* ── header ──────────────────────────── */
+    .u-header {
+      background: #1a3a8f;
+      padding: 72px 24px 40px;
+      color: white;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .u-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .8rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.65);
+      text-decoration: none;
+      margin-bottom: 20px;
+      transition: color .15s;
+    }
+    .u-back:hover { color: white; }
+    .u-header h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .u-header p { font-size: .9rem; opacity: .72; margin-bottom: 24px; }
+
+    .u-info-box {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .83rem;
+      line-height: 1.55;
+      opacity: .9;
+    }
+    .u-info-box svg { flex-shrink: 0; margin-top: 2px; }
+    .u-info-box strong { display: block; margin-bottom: 2px; }
+
+    .u-file-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      background: rgba(255,255,255,.12);
+      border: 1.5px solid rgba(255,255,255,.3);
+      color: white;
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-size: .85rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .u-file-btn:hover { background: rgba(255,255,255,.2); }
+
+    /* ── orange section ──────────────────── */
+    .u-orange { background: #E8690C; padding: 36px 0; }
+    .u-inner { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+    .u-tabs {
+      display: flex;
+      background: white;
+      border-radius: 12px;
+      padding: 4px;
+      width: fit-content;
+      margin-bottom: 20px;
+    }
+    .u-tab {
+      background: none;
+      border: none;
+      border-radius: 9px;
+      padding: 8px 24px;
+      font-size: .85rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      color: #6B7280;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: all .15s;
+    }
+    .u-tab.active { background: #1a3a8f; color: white; }
+
+    .u-import-card {
+      background: white;
+      border-radius: 16px;
+      padding: 26px;
+    }
+    .u-import-card h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: .97rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+    .u-import-card .u-ic-sub {
+      font-size: .82rem;
+      color: #6B7280;
+      margin-bottom: 16px;
+    }
+
+    .u-textarea {
+      width: 100%;
+      min-height: 200px;
+      background: #F8FAFC;
+      border: 1.5px solid #E5E7EB;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: .82rem;
+      font-family: 'Courier New', monospace;
+      color: #1E293B;
+      resize: vertical;
+      outline: none;
+      transition: border-color .15s;
+    }
+    .u-textarea:focus { border-color: #1A56E8; }
+    .u-textarea.error { border-color: #EF4444; }
+
+    .u-csv-hint {
+      background: #F8FAFC;
+      border: 1.5px solid #E5E7EB;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: .78rem;
+      font-family: 'Courier New', monospace;
+      color: #374151;
+      margin-bottom: 12px;
+    }
+    .u-csv-hint .csv-header { color: #1A56E8; font-weight: 700; }
+
+    .u-import-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .u-btn-import {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: #374151;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-size: .85rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .u-btn-import:hover { background: #1f2937; }
+    .u-btn-import:disabled { background: #9CA3AF; cursor: not-allowed; }
+    .u-btn-template {
+      background: none;
+      border: none;
+      color: #1A56E8;
+      font-size: .85rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+    .u-btn-template:hover { text-decoration: underline; }
+    .u-error-msg {
+      font-size: .78rem;
+      color: #EF4444;
+      margin-top: 8px;
+      display: none;
+      align-items: center;
+      gap: 5px;
+    }
+    .u-error-msg.show { display: flex; }
+
+    /* ── success toast ───────────────────── */
+    #u-toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: #166534;
+      color: white;
+      border-radius: 12px;
+      padding: 14px 20px;
+      font-size: .85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+      z-index: 500;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .3s;
+    }
+    #u-toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ── blue schema section ─────────────── */
+    .u-blue { background: #1a3a8f; padding: 40px 0 60px; }
+    .u-schema-card {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 16px;
+      padding: 24px 26px;
+      color: white;
+    }
+    .u-schema-card h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .u-schema-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .u-schema-tab {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.7);
+      border-radius: 8px;
+      padding: 5px 14px;
+      font-size: .75rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .u-schema-tab.active { background: white; color: #1a3a8f; }
+    pre.u-code {
+      background: rgba(0,0,0,.25);
+      border-radius: 10px;
+      padding: 16px;
+      font-size: .75rem;
+      line-height: 1.7;
+      overflow-x: auto;
+      margin: 0;
+      color: #E2E8F0;
+    }
+    pre.u-code .key   { color: #93C5FD; }
+    pre.u-code .str   { color: #86EFAC; }
+    pre.u-code .num   { color: #FDE68A; }
+    pre.u-code .cmt   { color: #6B7280; font-style: italic; }
+
+    /* ── imported data preview ───────────── */
+    .u-preview-card {
+      background: white;
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-top: 20px;
+      display: none;
+    }
+    .u-preview-card.show { display: block; }
+    .u-preview-card h4 {
+      font-family: 'Sora', sans-serif;
+      font-size: .88rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .u-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .u-preview-stat {
+      background: #F8FAFC;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    .u-preview-stat .ps-label { font-size: .71rem; color: #6B7280; margin-bottom: 3px; }
+    .u-preview-stat .ps-value { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.1rem; color: #111827; }
+    .u-preview-pub {
+      font-size: .8rem;
+      color: #374151;
+      background: #F8FAFC;
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .u-preview-pub span { color: #9CA3AF; font-size: .73rem; }
+
+    @media (max-width: 600px) { .u-preview-grid { grid-template-columns: repeat(2,1fr); } }

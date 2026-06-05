@@ -1,0 +1,218 @@
+    body.tpage { background: #1a3a8f; min-height: 100vh; }
+
+    /* ── hero header ───────────────────────── */
+    .t-hero {
+      background: #1a3a8f;
+      text-align: center;
+      padding: 72px 24px 48px;
+      color: white;
+      position: relative;
+    }
+    .t-hero h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .t-hero p {
+      font-size: .95rem;
+      opacity: .78;
+      margin-bottom: 28px;
+    }
+    .t-stat-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .t-stat-chip {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 14px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .t-stat-chip svg { opacity: .8; }
+    .t-stat-chip .sc-num {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+    .t-stat-chip .sc-lbl {
+      font-size: .78rem;
+      opacity: .75;
+    }
+
+    /* ── orange stripe ─────────────────────── */
+    .t-stripe {
+      background: #E8690C;
+      height: 80px;
+      position: relative;
+      z-index: 0;
+    }
+
+    /* ── cards section ─────────────────────── */
+    .t-body {
+      background: #1a3a8f;
+      padding: 0 20px 80px;
+    }
+    .t-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding-top: 32px;
+    }
+    .t-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .t-project-back {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: rgba(255,255,255,.75);
+      text-decoration: none;
+      font-size: .83rem;
+      font-weight: 600;
+      transition: color .15s;
+    }
+    .t-project-back:hover { color: white; }
+    .t-filter-row {
+      display: flex;
+      gap: 8px;
+    }
+    .t-filter-btn {
+      background: rgba(255,255,255,.1);
+      border: 1.5px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.8);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: .78rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .t-filter-btn:hover, .t-filter-btn.active {
+      background: white;
+      color: #1a3a8f;
+      border-color: white;
+    }
+
+    .t-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .t-card {
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0,0,0,.18);
+    }
+    .t-card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .t-avatar {
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .t-avatar-init {
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      background: #1a3a8f;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .t-info { flex: 1; }
+    .t-name {
+      font-weight: 700;
+      font-size: .93rem;
+      color: #111827;
+      margin-bottom: 2px;
+    }
+    .t-role {
+      font-size: .77rem;
+      font-weight: 600;
+    }
+    .t-proj-name {
+      font-size: .73rem;
+      color: #9CA3AF;
+      margin-top: 2px;
+    }
+    .t-quote-icon {
+      color: #DBEAFE;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .t-text {
+      font-size: .85rem;
+      color: #374151;
+      line-height: 1.65;
+      font-style: italic;
+    }
+    .t-date {
+      font-size: .72rem;
+      color: #CBD5E1;
+      margin-top: 12px;
+    }
+
+    .role-beneficiario { color: #E8690C; }
+    .role-voluntario   { color: #1A56E8; }
+    .role-estudiante   { color: #7C3AED; }
+    .role-colaborador  { color: #16A34A; }
+
+    /* ── submit CTA ────────────────────────── */
+    .t-submit-cta {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: #E8690C;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 24px;
+      font-size: .88rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(232,105,12,.45);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: transform .15s, box-shadow .15s;
+      z-index: 200;
+    }
+    .t-submit-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(232,105,12,.55);
+    }
+
+    .t-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 0;
+      color: rgba(255,255,255,.5);
+      font-size: .92rem;
+    }
+
+    @media (max-width: 900px) { .t-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 560px) { .t-grid { grid-template-columns: 1fr; } .t-hero h1 { font-size: 1.6rem; } }
