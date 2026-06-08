@@ -780,3 +780,11 @@
       .pp-cover { height: 200px; }
       .pp-title { font-size: 1.3rem; }
     }
+
+    .pp-back-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      color: var(--pp-accent, #1E293B); text-decoration: none; font-weight: 700; transition: opacity .15s;
+    }
+    .pp-back-link:hover { opacity: .7; }
+    .leader-link-page { color: inherit; font-weight: inherit; text-decoration: none; border-bottom: 1.5px dotted currentColor; }
+    .leader-link-page:hover { border-bottom-style: solid; }

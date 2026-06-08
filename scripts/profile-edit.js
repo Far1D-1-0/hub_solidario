@@ -1,37 +1,26 @@
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-    // Pre-fill fields — derive friendly name the same way the profile page does
-    function getFriendlyName(u) {
-      if (u.nombre) return u.nombre;
-      if (u.username) {
-        const raw = u.username.includes('@') ? u.username.split('@')[0] : u.username;
-        return raw.charAt(0).toUpperCase() + raw.slice(1);
-      }
-      return '';
-    }
-
-    document.getElementById('ep-nombre').value    = getFriendlyName(user);
-    document.getElementById('ep-email').value     = user.email || (user.username && user.username.includes('@') ? user.username : '');
+    document.getElementById('ep-nombre').value    = user.nombre    || '';
     document.getElementById('ep-about').value     = user.about     || '';
-    document.getElementById('ep-phone').value     = user.phone     || '';
+    document.getElementById('ep-phone').value     = user.telefono  || '';
     document.getElementById('ep-linktree').value  = user.linktree  || '';
     document.getElementById('ep-instagram').value = user.instagram || '';
     document.getElementById('ep-linkedin').value  = user.linkedin  || '';
 
-    const rolSelect = document.getElementById('ep-rol');
-    if (user.rol) {
-      for (const opt of rolSelect.options) {
-        if (opt.text === user.rol) { opt.selected = true; break; }
-      }
+    // Email is read-only — just show it
+    const emailEl = document.getElementById('ep-email');
+    if (emailEl) {
+      emailEl.value    = user.email || '';
+      emailEl.readOnly = true;
+      emailEl.style.opacity = '.6';
     }
 
-    // JS-managed error helpers — no error spans exist in HTML
+    // JS error helpers
     function showError(inputId, message) {
       clearError(inputId);
       const input = document.getElementById(inputId);
       const field = input.closest('.pf-field');
       field.classList.add('has-error');
-      // Red label
       const label = field.querySelector('label');
       if (label) label.style.color = '#EF4444';
       const span = document.createElement('span');
@@ -44,6 +33,7 @@
 
     function clearError(inputId) {
       const input = document.getElementById(inputId);
+      if (!input) return;
       const field = input.closest('.pf-field');
       field.classList.remove('has-error');
       const label = field.querySelector('label');
@@ -51,57 +41,56 @@
       field.querySelector('.error-msg')?.remove();
     }
 
-    // Clear errors on input/change
-    ['ep-nombre','ep-email','ep-phone','ep-linktree','ep-instagram','ep-linkedin','ep-about'].forEach(id => {
-      document.getElementById(id).addEventListener('input', () => clearError(id));
+    ['ep-nombre','ep-phone','ep-linktree','ep-instagram','ep-linkedin','ep-about'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', () => clearError(id));
     });
-    document.getElementById('ep-rol').addEventListener('change', () => clearError('ep-rol'));
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    document.getElementById('form-edit').addEventListener('submit', e => {
+    document.getElementById('form-edit').addEventListener('submit', async e => {
       e.preventDefault();
       let valid = true;
 
       const nombre = document.getElementById('ep-nombre').value.trim();
-      const email  = document.getElementById('ep-email').value.trim();
-
       if (!nombre) {
         showError('ep-nombre', 'Por favor ingresa tu nombre completo');
         valid = false;
       }
-
-      if (email && !emailRegex.test(email)) {
-        showError('ep-email', 'Por favor ingresa un correo electrónico válido');
-        valid = false;
-      }
-
       if (!valid) {
         document.querySelector('.pf-field.has-error')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
 
-      const updated = {
-        ...user,
-        nombre:    nombre,
-        username:  nombre,
-        rol:       document.getElementById('ep-rol').value || user.rol || '',
-        about:     document.getElementById('ep-about').value.trim(),
-        phone:     document.getElementById('ep-phone').value.trim(),
-        linktree:  document.getElementById('ep-linktree').value.trim(),
-        instagram: document.getElementById('ep-instagram').value.trim(),
-        linkedin:  document.getElementById('ep-linkedin').value.trim(),
+      const btn = e.target.querySelector('[type=submit]');
+      btn.disabled = true;
+
+      const payload = {
+        nombre,
+        about:     document.getElementById('ep-about').value.trim()     || null,
+        telefono:  document.getElementById('ep-phone').value.trim()     || null,
+        linktree:  document.getElementById('ep-linktree').value.trim()  || null,
+        instagram: document.getElementById('ep-instagram').value.trim() || null,
+        linkedin:  document.getElementById('ep-linkedin').value.trim()  || null,
       };
 
-      if (email) updated.email = email;
-
-      // Remove empty optional fields to keep localStorage clean
-      ['rol','about','phone','linktree','instagram','linkedin'].forEach(k => {
-        if (!updated[k]) delete updated[k];
-      });
-
-      localStorage.setItem('user', JSON.stringify(updated));
-      window.location.href = 'profile.html';
+      try {
+        const res  = await fetch('controllers/profile/update.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const json = await res.json();
+        if (!json.ok) {
+          showError('ep-nombre', json.error || 'Error al guardar');
+          btn.disabled = false;
+          return;
+        }
+        // Merge updated fields into localStorage
+        const updated = { ...user, ...json.data };
+        localStorage.setItem('user', JSON.stringify(updated));
+        window.location.href = 'profile.html';
+      } catch {
+        showError('ep-nombre', 'Error de conexión, intenta de nuevo');
+        btn.disabled = false;
+      }
     });
 
     document.getElementById('btn-cancel').addEventListener('click', () => {

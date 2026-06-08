@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Crear Cuenta - Proyectos Solidarios</title>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="styles/styles.css"/>
+  <link rel="stylesheet" href="content/styles.css"/>
 </head>
 <body class="subpage">
 
@@ -63,20 +63,11 @@
         <label>Rol</label>
         <select id="reg-rol" class="reg-input reg-select">
           <option value="" disabled selected>Selecciona un rol</option>
-          <option>Líder Social</option>
-          <option>Voluntario</option>
-          <option>Coordinador</option>
           <option>Administrador</option>
+          <option>Líder Social</option>
+          <option>Usuario</option>
         </select>
         <span class="error-msg" id="err-rol">Por favor selecciona un rol</span>
-      </div>
-
-      <div class="form-field" id="field-terms">
-        <div class="terms-row">
-          <input type="checkbox" id="accept-terms"/>
-          <label for="accept-terms">Acepto los <a href="#" class="terms-link">términos y condiciones</a></label>
-        </div>
-        <span class="error-msg" id="err-terms">Debes aceptar los términos y condiciones</span>
       </div>
 
       <button type="submit" class="btn-full btn-orange-solid">Crear Cuenta</button>

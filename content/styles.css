@@ -1030,3 +1030,25 @@ body.subpage {
   .profile-body { padding: 50px 16px 20px; }
   .edit-profile-btn { right: 16px; }
 }
+
+.leader-projects-list { display: flex; flex-direction: column; gap: 8px; }
+.leader-project-item {
+  display: flex; align-items: center; gap: 9px; padding: 10px 12px;
+  background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px;
+  text-decoration: none; font-size: 13.5px; font-weight: 600; color: #1E293B;
+  transition: background .15s, border-color .15s;
+}
+.leader-project-item:hover { background: #EFF6FF; border-color: #BFDBFE; color: #1A56E8; }
+.leader-project-item .arrow { margin-left: auto; flex-shrink: 0; opacity: .5; }
+.leader-project-item:hover .arrow { opacity: 1; }
+
+/* Solicitudes admin */
+.solicitudes-list { display: flex; flex-direction: column; gap: 12px; padding: 16px; }
+.sol-item { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 12px 16px; }
+.sol-name { font-weight: 700; color: #1E293B; font-size: .93rem; }
+.sol-meta { font-size: .8rem; color: #64748B; margin-top: 2px; }
+.sol-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.sol-approve { background: #DCFCE7; color: #16A34A; border: 1px solid #BBF7D0; padding: 6px 14px; border-radius: 8px; font-size: .8rem; font-weight: 700; cursor: pointer; }
+.sol-approve:hover { background: #BBF7D0; }
+.sol-reject  { background: #FEE2E2; color: #DC2626; border: 1px solid #FECACA; padding: 6px 14px; border-radius: 8px; font-size: .8rem; font-weight: 700; cursor: pointer; }
+.sol-reject:hover  { background: #FECACA; }
