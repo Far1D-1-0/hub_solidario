@@ -1,4 +1,5 @@
-  const ROLE_CLASS = { Beneficiario: 'role-beneficiario', Voluntario: 'role-voluntario', Estudiante: 'role-estudiante', Colaborador: 'role-colaborador' };
+  const ALLOWED_ROLES = new Set(['Beneficiario', 'Estudiante']);
+  const ROLE_CLASS = { Beneficiario: 'role-beneficiario', Estudiante: 'role-estudiante' };
 
   const params  = new URLSearchParams(location.search);
   const projId  = parseInt(params.get('id') || '0', 10);
@@ -19,10 +20,8 @@
       counts[role] = (counts[role] || 0) + 1;
     });
     const icons = {
-      Voluntario:   `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`,
       Beneficiario: `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>`,
       Estudiante:   `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`,
-      Colaborador:  `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>`,
     };
     const row = document.getElementById('t-stat-row');
     row.innerHTML = Object.entries(counts).map(([role, count]) => `
@@ -84,7 +83,7 @@
     try {
       const res  = await fetch(`controllers/testimonials/list.php?proyecto=${projId}&estado=APROBADO`);
       const json = await res.json();
-      if (json.ok) allTestimonials = json.data;
+      if (json.ok) allTestimonials = json.data.filter(t => ALLOWED_ROLES.has(t.tipo_participante));
     } catch {}
 
     buildStats(allTestimonials);

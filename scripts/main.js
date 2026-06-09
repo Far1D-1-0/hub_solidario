@@ -117,3 +117,47 @@ const barObserver = new IntersectionObserver(entries => {
 }, { threshold: 0.5 });
 
 bars.forEach(bar => barObserver.observe(bar));
+
+/* ─── FEATURED PROJECTS (index only) ────────────────────────── */
+(function () {
+  const grid = document.getElementById('projects-grid');
+  if (!grid) return;
+
+  const COLORS = ['#1A56E8','#F05A28','#16A34A','#7C3AED','#DC2626','#0891B2','#B45309','#0F766E'];
+
+  fetch('controllers/projects/list.php')
+    .then(r => r.json())
+    .then(json => {
+      if (!json.ok) return;
+      const projects = (json.data || []).slice(0, 6);
+      if (!projects.length) return;
+
+      grid.innerHTML = projects.map((p, i) => {
+        const lider = p.lider_nombre || 'Líder';
+        const init  = lider[0].toUpperCase();
+        const color = COLORS[i % COLORS.length];
+        const img   = p.imagen || 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&q=80';
+        const desc  = (p.descripcion || '').length > 110
+          ? p.descripcion.substring(0, 110) + '…'
+          : (p.descripcion || '');
+        return `
+          <div class="proj-card reveal">
+            <div class="proj-img">
+              <img src="${img}" alt="${p.nombre}" loading="lazy"/>
+              <div class="proj-author">
+                <div class="avatar" style="background:${color}">${init}</div>
+                ${lider}
+              </div>
+            </div>
+            <div class="proj-body">
+              <h3>${p.nombre}</h3>
+              <p>${desc}</p>
+              <a href="project-page.html?id=${p.id}" class="proj-link">Conocer más →</a>
+            </div>
+          </div>`;
+      }).join('');
+
+      grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    })
+    .catch(() => {});
+})();

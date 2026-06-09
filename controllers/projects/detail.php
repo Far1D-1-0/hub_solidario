@@ -25,6 +25,7 @@ $stmt = $pdo->prepare('
         p.porcentaje_completacion AS completacion,
         p.fecha_creacion,
         p.datos_importados,
+        p.id_categoria,
         c.nombre              AS categoria_nombre,
         c.color               AS categoria_color,
         c.codigo              AS categoria_codigo,
@@ -59,6 +60,7 @@ $kpis = $pdo->prepare('
         k.nombre,
         k.descripcion,
         k.valor_meta,
+        k.id_unidad_medida,
         um.nombre  AS unidad_nombre,
         um.simbolo AS unidad_simbolo,
         ek.codigo  AS estado,
@@ -99,12 +101,13 @@ $pubs = $pdo->prepare('
 $pubs->execute([$id]);
 $project['publicaciones'] = $pubs->fetchAll();
 
-// Conteo de testimonios por estado
+// Conteo de testimonios por estado (solo roles públicos)
 $ttest = $pdo->prepare('
     SELECT et.codigo AS estado, COUNT(*) AS total
     FROM Testimonio t
     JOIN EstadoTestimonio et ON et.id_estado_testimonio = t.id_estado_testimonio
     WHERE t.id_proyecto = ?
+      AND t.tipo_participante IN (\'Beneficiario\', \'Estudiante\')
     GROUP BY et.codigo
 ');
 $ttest->execute([$id]);

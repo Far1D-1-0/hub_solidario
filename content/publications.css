@@ -104,6 +104,113 @@
       font-size: .92rem;
     }
 
+    /* ── card actions (manager only) ── */
+    .pub-card-head { position: relative; }
+    .pub-card-actions {
+      display: flex;
+      gap: 6px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .pub-btn-edit, .pub-btn-del {
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s;
+    }
+    .pub-btn-edit { background: #EFF6FF; color: #1A56E8; }
+    .pub-btn-edit:hover { background: #DBEAFE; }
+    .pub-btn-del  { background: #FEF2F2; color: #EF4444; }
+    .pub-btn-del:hover  { background: #FEE2E2; }
+
+    /* ── manager modal ── */
+    .mgr-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.55);
+      z-index: 900;
+    }
+    .mgr-modal {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 901;
+      background: white;
+      border-radius: 20px;
+      padding: 28px 30px;
+      width: min(500px, 94vw);
+      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+    }
+    .mgr-modal-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 18px;
+    }
+    .mgr-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #E5E7EB;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      color: #111827;
+      resize: vertical;
+      box-sizing: border-box;
+      transition: border-color .15s;
+    }
+    .mgr-textarea:focus { outline: none; border-color: #1A56E8; }
+    .mgr-msg {
+      font-size: .82rem;
+      margin-top: 8px;
+    }
+    .mgr-confirm-txt {
+      font-size: .9rem;
+      color: #374151;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .mgr-btn-row {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 18px;
+    }
+    .mgr-btn {
+      padding: 9px 20px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Sora', sans-serif;
+      font-size: .85rem;
+      font-weight: 600;
+      transition: all .15s;
+    }
+    .mgr-btn-cancel { background: #F3F4F6; color: #374151; }
+    .mgr-btn-cancel:hover { background: #E5E7EB; }
+    .mgr-btn-save   { background: #1A56E8; color: white; }
+    .mgr-btn-save:hover { background: #1447c3; }
+    .mgr-btn-del    { background: #EF4444; color: white; }
+    .mgr-btn-del:hover  { background: #DC2626; }
+
+    /* ── FAB ── */
+    .mgr-fab {
+      position: fixed; bottom: 28px; right: 28px;
+      z-index: 800;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      background: #1A56E8;
+      color: white;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 18px rgba(26,86,232,.5);
+      transition: all .2s;
+    }
+    .mgr-fab:hover { background: #1447c3; transform: scale(1.07); }
+
     @media (max-width: 560px) {
       .pub-hero h1 { font-size: 1.6rem; }
       .pub-card { padding: 18px; }

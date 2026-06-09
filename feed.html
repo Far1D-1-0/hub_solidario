@@ -24,6 +24,7 @@
       <li><a href="index.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg><div class="link-info"><strong>Inicio</strong><span>Página principal</span></div></a></li>
       <li><a href="feed.html" class="nav-active"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 11h16M4 6h16M4 16h10"/></svg><div class="link-info"><strong>Feed</strong><span>Actividades recientes</span></div></a></li>
       <li><a href="catalog.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><div class="link-info"><strong>Catálogo</strong><span>Todos los proyectos</span></div></a></li>
+      <li><a href="events.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><div class="link-info"><strong>Eventos</strong><span>Calendario de actividades</span></div></a></li>
       <li id="nav-register-link" style="display:none"><a href="project-form.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><div class="link-info"><strong>Registrar</strong><span>Nueva iniciativa</span></div></a></li>
       <li id="nav-my-project-link" style="display:none"><a href="#"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg><div class="link-info"><strong>Mi Proyecto</strong><span>Ver tu iniciativa</span></div></a></li>
       <li><a href="login.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="link-info"><strong>Perfil</strong><span>Gestiona tu cuenta</span></div></a></li>
@@ -49,133 +50,18 @@
     <div class="feed-layout">
 
       <!-- Posts -->
-      <div>
-
-        <div class="feed-card">
-          <div class="feed-top-row">
-            <div>
-              <div class="feed-author">María González</div>
-              <div class="feed-project">Banco de Alimentos Universitario</div>
-            </div>
-            <span class="feed-time">Hace 2 horas</span>
-          </div>
-          <p class="feed-text">¡Increíble jornada de recolección hoy! Logramos reunir más de 500kg de alimentos gracias a la colaboración de todos. 🎉</p>
-          <img class="feed-img" src="https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&q=80" alt="Jornada de recolección"/>
-          <div class="feed-actions">
-            <button class="feed-btn">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-              45
-            </button>
-            <button class="feed-btn">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-              12
-            </button>
-            <button class="feed-btn">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-              Compartir
-            </button>
-          </div>
-        </div>
-
-        <div class="feed-card">
-          <div class="feed-top-row">
-            <div>
-              <div class="feed-author">Carlos Ramírez</div>
-              <div class="feed-project">Tutorías Académicas Gratuitas</div>
-            </div>
-            <span class="feed-time">Hace 5 horas</span>
-          </div>
-          <p class="feed-text">Mis estudiantes aprobaron todos sus exámenes este semestre. Ver su progreso es la mejor recompensa. 📚✨</p>
-          <img class="feed-img" src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=800&q=80" alt="Estudiantes"/>
-          <div class="feed-actions">
-            <button class="feed-btn">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-              38
-            </button>
-            <button class="feed-btn">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-              7
-            </button>
-            <button class="feed-btn">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-              Compartir
-            </button>
-          </div>
-        </div>
-
-        <div class="feed-card">
-          <div class="feed-top-row">
-            <div>
-              <div class="feed-author">Ana Martínez</div>
-              <div class="feed-project">Limpieza de Espacios Naturales</div>
-            </div>
-            <span class="feed-time">Hace 1 día</span>
-          </div>
-          <p class="feed-text">Terminamos la jornada de limpieza en Playa del Carmen. Retiramos más de 200kg de residuos. ¡El planeta nos lo agradece! 🌊🌿</p>
-          <img class="feed-img" src="https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?w=800&q=80" alt="Limpieza de playa"/>
-          <div class="feed-actions">
-            <button class="feed-btn">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-              62
-            </button>
-            <button class="feed-btn">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-              19
-            </button>
-            <button class="feed-btn">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-              Compartir
-            </button>
-          </div>
-        </div>
-
+      <div id="feed-list">
+        <p class="feed-loading">Cargando publicaciones...</p>
       </div>
 
       <!-- Sidebar -->
       <div>
         <div class="sidebar-card">
           <div class="sidebar-title">Próximos Eventos</div>
-
-          <div class="event-item">
-            <div class="event-name">Jornada de Recolección</div>
-            <div class="event-project">Banco de Alimentos</div>
-            <div class="event-meta-row">
-              <svg width="13" height="13" fill="none" stroke="#1A56E8" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-              15 de Marzo, 2026
-            </div>
-            <div class="event-meta-row">
-              <svg width="13" height="13" fill="none" stroke="#F05A28" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              Campus Principal
-            </div>
+          <div id="events-list">
+            <p class="feed-loading" style="font-size:.83rem">Cargando...</p>
           </div>
-
-          <div class="event-item">
-            <div class="event-name">Limpieza de Playa</div>
-            <div class="event-project">Espacios Naturales</div>
-            <div class="event-meta-row">
-              <svg width="13" height="13" fill="none" stroke="#1A56E8" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-              20 de Marzo, 2026
-            </div>
-            <div class="event-meta-row">
-              <svg width="13" height="13" fill="none" stroke="#F05A28" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              Playa del Carmen
-            </div>
-          </div>
-
-          <div class="event-item">
-            <div class="event-name">Brigada Médica</div>
-            <div class="event-project">Salud Comunitaria</div>
-            <div class="event-meta-row">
-              <svg width="13" height="13" fill="none" stroke="#1A56E8" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-              25 de Marzo, 2026
-            </div>
-            <div class="event-meta-row">
-              <svg width="13" height="13" fill="none" stroke="#F05A28" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              Comunidad Rural
-            </div>
-          </div>
-
-          <button class="btn-see-all">Ver Todos los Eventos</button>
+          <a href="events.html" class="btn-see-all">Ver Todos los Eventos</a>
         </div>
       </div>
 

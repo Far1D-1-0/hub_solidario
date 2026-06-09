@@ -1039,3 +1039,62 @@ INSERT INTO `Testimonio` (fecha, contenido, tipo_participante, nombre_publico, i
   ('2024-06-18 10:00:00', 'Acabo de inscribirme al curso de emprendimiento y estoy muy emocionada. Las instalaciones son increíbles y el personal muy amable. Espero que este programa me ayude a lanzar mi negocio de repostería.', 'Beneficiario', 'Mariana G.', NULL, @pid, @t_pendiente),
   ('2024-06-17 15:00:00', 'Vine a conocer el centro y me interesa mucho el programa de microfinanzas. El proceso de registro fue un poco largo pero el equipo fue muy atento en todo momento.', 'Beneficiario', 'Roberto S.', NULL, @pid, @t_pendiente),
   ('2024-04-10 09:00:00', 'El horario de algunos talleres no es muy conveniente y a veces hay cancelaciones de último minuto sin aviso previo. Espero que mejoren la comunicación con los participantes.', 'Beneficiario', 'Anónimo', NULL, @pid, @t_rechazado);
+
+-- ── Eventos ─────────────────────────────────────────────────────────────
+SET @ev_publicado  = (SELECT id_estado_evento FROM EstadoEvento WHERE codigo = 'PUBLICADO');
+SET @ev_programado = (SELECT id_estado_evento FROM EstadoEvento WHERE codigo = 'PROGRAMADO');
+SET @ev_pasado     = (SELECT id_estado_evento FROM EstadoEvento WHERE codigo = 'PASADO');
+SET @admin_u       = (SELECT id_usuario FROM Usuario WHERE email = 'admin@hub.mx');
+SET @huertos_p     = (SELECT id_proyecto FROM Proyecto WHERE nombre = 'Huertos Urbanos Comunitarios');
+SET @brigadas_p    = (SELECT id_proyecto FROM Proyecto WHERE nombre = 'Brigadas de Salud Comunitaria');
+SET @tutorias_p    = (SELECT id_proyecto FROM Proyecto WHERE nombre = 'Tutorías Académicas Gratuitas');
+
+INSERT INTO `Evento` (nombre, descripcion, fecha_realizacion, fecha_publicacion, id_usuario_creador, id_proyecto, id_estado_evento) VALUES
+
+-- Centro Comunitario Integral
+('Reunión de Voluntarios — Junio 2026',
+ 'Sesión mensual de coordinación con todos los voluntarios activos. Se revisarán los avances del mes y se planificarán las actividades del siguiente periodo.',
+ '2026-06-05 17:00:00', '2026-05-28 00:00:00', @lider, @pid, @ev_pasado),
+
+('Taller de Habilidades Digitales',
+ 'Capacitación en herramientas digitales básicas: correo electrónico, búsqueda segura en internet y uso de hojas de cálculo. Dirigido a adultos mayores de la comunidad. Cupo limitado a 20 personas.',
+ '2026-06-15 10:00:00', '2026-06-01 00:00:00', @lider, @pid, @ev_publicado),
+
+('Jornada Comunitaria de Limpieza',
+ 'Actividad de embellecimiento del parque principal de la Colonia Solidaria. Se dotará de materiales a todos los participantes. Punto de encuentro: entrada principal del parque a las 8:00 hrs.',
+ '2026-06-22 08:00:00', '2026-06-08 00:00:00', @lider, @pid, @ev_programado),
+
+('Noche de Cine Comunitario',
+ 'Proyección de película bajo las estrellas en el patio del centro. Entrada libre para toda la familia. Se proyectará "Coco" con temática de identidad y comunidad.',
+ '2026-06-28 19:30:00', '2026-06-10 00:00:00', @lider, @pid, @ev_programado),
+
+('Feria de Emprendimiento Social',
+ 'Exposición de proyectos comunitarios, stands de emprendedores locales y talleres rápidos de finanzas personales e innovación social. Evento abierto al público sin costo de entrada.',
+ '2026-07-12 09:00:00', '2026-06-20 00:00:00', @lider, @pid, @ev_programado),
+
+('Taller de Finanzas para el Hogar',
+ 'Aprende a elaborar un presupuesto familiar, reducir deudas y ahorrar de forma efectiva. Impartido por voluntarios del área financiera. Sesión de 3 horas con materiales incluidos.',
+ '2026-07-19 11:00:00', '2026-06-25 00:00:00', @lider, @pid, @ev_programado),
+
+('Ceremonia de Graduación — Beneficiarios 2026',
+ 'Reconocimiento a los beneficiarios que completaron los programas de capacitación del año. Contará con la presencia de autoridades locales, familias y medios de comunicación.',
+ '2026-08-15 18:00:00', '2026-07-01 00:00:00', @lider, @pid, @ev_programado),
+
+-- Huertos Urbanos Comunitarios
+('Siembra Colectiva de Temporada',
+ 'Jornada de siembra de hortalizas de temporada en los huertos comunitarios. Aprende técnicas de cultivo orgánico y llévate plántulas para tu hogar. No se requiere experiencia previa.',
+ '2026-06-21 08:00:00', '2026-06-07 00:00:00', @admin_u, @huertos_p, @ev_programado),
+
+('Cosecha y Trueque de Productos',
+ 'Primera cosecha de la temporada y mercado de trueque entre vecinos. Trae tus excedentes de jardín y llévate algo nuevo. Evento familiar con música en vivo.',
+ '2026-08-08 09:00:00', '2026-07-15 00:00:00', @admin_u, @huertos_p, @ev_programado),
+
+-- Brigadas de Salud Comunitaria
+('Jornada Médica Gratuita',
+ 'Consultas médicas generales, toma de presión arterial, glucosa y orientación nutricional sin costo. Atención por orden de llegada. Cupos disponibles: 80 personas.',
+ '2026-07-05 09:00:00', '2026-06-15 00:00:00', @admin_u, @brigadas_p, @ev_programado),
+
+-- Tutorías Académicas Gratuitas
+('Entrega de Reconocimientos Académicos',
+ 'Ceremonia de premiación a los estudiantes destacados del ciclo escolar que participaron en el programa de tutorías. Asistencia abierta a padres de familia.',
+ '2026-07-26 16:00:00', '2026-07-01 00:00:00', @admin_u, @tutorias_p, @ev_programado);

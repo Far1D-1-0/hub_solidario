@@ -142,7 +142,9 @@
       me.rol_codigo === 'ADMIN'
     );
 
-    const testCount = (project.testimonios_resumen || []).reduce((s, t) => s + parseInt(t.total || 0), 0);
+    const testCount = (project.testimonios_resumen || [])
+      .filter(t => t.estado === 'APROBADO')
+      .reduce((s, t) => s + parseInt(t.total || 0), 0);
     const contentCards = [
       {
         icon: `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
@@ -527,6 +529,133 @@
     });
   })();
 
+  /* ─── EDIT INFO ─────────────────────────────────────────────── */
+  let currentProject    = null;
+  let cachedCategories  = null;
+
+  (function initEditInfo() {
+    const eiOverlay = document.getElementById('ei-overlay');
+    const eiMsg     = document.getElementById('ei-msg');
+
+    function showMsg(txt, ok) {
+      eiMsg.textContent   = txt;
+      eiMsg.style.color   = ok ? '#16A34A' : '#EF4444';
+      eiMsg.style.display = 'block';
+    }
+
+    function closeEi() { eiOverlay.style.display = 'none'; }
+
+    document.getElementById('ei-close').addEventListener('click', closeEi);
+    document.getElementById('ei-cancel').addEventListener('click', closeEi);
+    eiOverlay.addEventListener('click', e => { if (e.target === eiOverlay) closeEi(); });
+
+    document.getElementById('btn-edit-info').addEventListener('click', async () => {
+      if (!currentProject) return;
+      eiMsg.style.display = 'none';
+
+      // Load categories once
+      if (!cachedCategories) {
+        try {
+          const r = await fetch('controllers/categories/list.php');
+          const j = await r.json();
+          cachedCategories = j.ok ? j.data : [];
+        } catch { cachedCategories = []; }
+      }
+
+      const sel = document.getElementById('ei-categoria');
+      sel.innerHTML = '<option value="">Sin categoría</option>' +
+        cachedCategories.map(c =>
+          `<option value="${c.id}" ${parseInt(currentProject.id_categoria) === c.id ? 'selected' : ''}>${c.nombre}</option>`
+        ).join('');
+
+      // Pre-fill fields
+      document.getElementById('ei-nombre').value        = currentProject.nombre || '';
+      document.getElementById('ei-desc').value          = currentProject.descripcion || '';
+      document.getElementById('ei-ubicacion').value     = currentProject.ubicacion || '';
+      document.getElementById('ei-about').value         = currentProject.about || '';
+      document.getElementById('ei-comunidad').value     = currentProject.comunidad || '';
+
+      const objs = Array.isArray(currentProject.objetivos) ? currentProject.objetivos : [];
+      document.getElementById('ei-objetivos').value = objs.join('\n');
+
+      const op = (currentProject.operacion && !Array.isArray(currentProject.operacion))
+        ? currentProject.operacion : {};
+      document.getElementById('ei-schedule').value     = op.schedule     || '';
+      document.getElementById('ei-locations').value    = op.locations    || '';
+      document.getElementById('ei-participation').value = op.participation || '';
+
+      eiOverlay.style.display = 'flex';
+      document.getElementById('ei-nombre').focus();
+    });
+
+    document.getElementById('ei-save').addEventListener('click', async () => {
+      const nombre = document.getElementById('ei-nombre').value.trim();
+      if (!nombre) return showMsg('El nombre del proyecto es requerido.', false);
+      eiMsg.style.display = 'none';
+
+      const objetivos = document.getElementById('ei-objetivos').value
+        .split('\n').map(s => s.trim()).filter(Boolean);
+      const operacion = {
+        schedule:      document.getElementById('ei-schedule').value.trim(),
+        locations:     document.getElementById('ei-locations').value.trim(),
+        participation: document.getElementById('ei-participation').value.trim(),
+      };
+      const payload = {
+        id:                       projId,
+        nombre,
+        descripcion:              document.getElementById('ei-desc').value.trim(),
+        ubicacion:                document.getElementById('ei-ubicacion').value.trim(),
+        about:                    document.getElementById('ei-about').value.trim(),
+        comunidad:                document.getElementById('ei-comunidad').value.trim(),
+        objetivos,
+        operacion,
+        id_categoria:             document.getElementById('ei-categoria').value || null,
+      };
+
+      try {
+        const res  = await fetch('controllers/projects/update.php', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const json = await res.json();
+        if (!json.ok) return showMsg(json.error || 'Error al guardar.', false);
+
+        // Update currentProject and displayed data
+        Object.assign(currentProject, {
+          nombre:       payload.nombre,
+          descripcion:  payload.descripcion,
+          ubicacion:    payload.ubicacion,
+          about:        payload.about,
+          comunidad:    payload.comunidad,
+          objetivos:    payload.objetivos,
+          operacion:    payload.operacion,
+          id_categoria: payload.id_categoria,
+        });
+
+        document.title = nombre + ' - Proyectos Solidarios';
+        document.getElementById('pp-title').textContent    = nombre;
+        document.getElementById('pp-hero-desc').textContent = payload.descripcion;
+        document.getElementById('desc-about').textContent  = payload.about;
+        document.getElementById('desc-community').textContent = payload.comunidad;
+        document.getElementById('desc-objectives').innerHTML =
+          payload.objetivos.length
+            ? payload.objetivos.map(o => `<li>${o}</li>`).join('')
+            : '<li>Sin objetivos registrados</li>';
+        document.getElementById('desc-operation').innerHTML = [
+          { label: 'Horarios',      value: operacion.schedule      || '—' },
+          { label: 'Ubicaciones',   value: operacion.locations     || (payload.ubicacion || '—') },
+          { label: 'Participación', value: operacion.participation || '—' },
+        ].map(o => `
+          <div class="pp-op-card">
+            <div class="op-label">${o.label}</div>
+            <div class="op-value">${o.value.replace(/\n/g, '<br>')}</div>
+          </div>`).join('');
+
+        closeEi();
+      } catch { showMsg('Error de conexión.', false); }
+    });
+  })();
+
   /* ─── LOAD PROJECT & INIT ───────────────────────────────────── */
   async function init() {
     if (!projId) {
@@ -554,6 +683,8 @@
       const sj = await sr.json();
       if (sj.ok && sj.data) settings = { ...settings, ...sj.data };
     } catch {}
+
+    currentProject = project;
 
     document.getElementById('del-proj-name').textContent = project.nombre;
     document.getElementById('btn-upload-data').href = `upload-data.html?id=${projId}`;

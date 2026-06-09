@@ -797,3 +797,117 @@
     .pp-back-link:hover { opacity: .7; }
     .leader-link-page { color: inherit; font-weight: inherit; text-decoration: none; border-bottom: 1.5px dotted currentColor; }
     .leader-link-page:hover { border-bottom-style: solid; }
+
+    /* ── Edit Info Modal ──────────────────────────────────────── */
+    .ei-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.55);
+      z-index: 1400;
+      align-items: center;
+      justify-content: center;
+    }
+    .ei-modal {
+      background: white;
+      border-radius: 20px;
+      width: min(600px, 96vw);
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 64px rgba(0,0,0,.35);
+      overflow: hidden;
+    }
+    .ei-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 28px 16px;
+      border-bottom: 1px solid #F3F4F6;
+      flex-shrink: 0;
+    }
+    .ei-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0;
+    }
+    .ei-close {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: #F3F4F6;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #6B7280;
+      transition: background .15s;
+    }
+    .ei-close:hover { background: #E5E7EB; }
+    .ei-body {
+      padding: 20px 28px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .ei-section-label {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #9CA3AF;
+      margin-bottom: 12px;
+    }
+    .ei-row { margin-bottom: 14px; }
+    .ei-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .ei-label {
+      display: block;
+      font-size: .8rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 5px;
+    }
+    .ei-input, .ei-textarea, .ei-select {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid #E5E7EB;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .88rem;
+      color: #111827;
+      box-sizing: border-box;
+      background: white;
+      transition: border-color .15s;
+    }
+    .ei-input:focus, .ei-textarea:focus, .ei-select:focus { outline: none; border-color: var(--pp-accent, #1E293B); }
+    .ei-textarea { resize: vertical; }
+    .ei-msg { font-size: .82rem; margin-top: 10px; }
+    .ei-foot {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      padding: 16px 28px;
+      border-top: 1px solid #F3F4F6;
+      flex-shrink: 0;
+    }
+    .ei-btn-cancel, .ei-btn-save {
+      padding: 9px 22px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Sora', sans-serif;
+      font-size: .85rem;
+      font-weight: 600;
+      transition: all .15s;
+    }
+    .ei-btn-cancel { background: #F3F4F6; color: #374151; }
+    .ei-btn-cancel:hover { background: #E5E7EB; }
+    .ei-btn-save   { background: var(--pp-accent, #1E293B); color: white; }
+    .ei-btn-save:hover { opacity: .88; }
+
+    @media (max-width: 560px) {
+      .ei-row-2 { grid-template-columns: 1fr; }
+      .ei-head, .ei-body, .ei-foot { padding-left: 18px; padding-right: 18px; }
+    }

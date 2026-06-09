@@ -1,4 +1,5 @@
-  const ROLE_CLASS = { Beneficiario: 'role-beneficiario', Voluntario: 'role-voluntario', Estudiante: 'role-estudiante', Colaborador: 'role-colaborador' };
+  const ALLOWED_ROLES = new Set(['Beneficiario', 'Estudiante']);
+  const ROLE_CLASS = { Beneficiario: 'role-beneficiario', Estudiante: 'role-estudiante' };
 
   const params  = new URLSearchParams(location.search);
   const projId  = parseInt(params.get('id') || '0', 10);
@@ -23,7 +24,7 @@
     try {
       const res  = await fetch(`controllers/testimonials/list.php?proyecto=${projId}&estado=${estado}`);
       const json = await res.json();
-      if (json.ok) tabData[estado] = json.data;
+      if (json.ok) tabData[estado] = json.data.filter(t => ALLOWED_ROLES.has(t.tipo_participante));
     } catch {}
   }
 
