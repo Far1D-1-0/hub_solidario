@@ -1,13 +1,27 @@
-  const params    = new URLSearchParams(location.search);
-  const projId    = parseInt(params.get('id') || '0', 10);
-  const overrideKey = `project_override_${projId}`;
+  const params  = new URLSearchParams(location.search);
+  const projId  = parseInt(params.get('id') || '0', 10);
 
-  const PROJECTS_TITLES = ["Banco de Alimentos Universitario","Tutorías Académicas Gratuitas","Limpieza de Espacios Naturales","Brigadas de Salud Comunitaria","Construcción de Viviendas Dignas","Alfabetización Digital para Adultos","Huertos Urbanos Comunitarios","Centro de Apoyo Psicológico","Biblioteca Comunitaria Móvil","Taller de Arte y Expresión Joven","Red de Reciclaje Escolar","Emprendimiento Social Femenino","Cocinas Comunitarias Solidarias","Programa de Reforestación Costera","Clínica Dental Comunitaria"];
-  const projTitle = PROJECTS_TITLES[projId] || 'Proyecto';
-
-  document.title = `Cargar Datos - ${projTitle}`;
-  document.getElementById('u-proj-name').textContent = projTitle;
   document.getElementById('u-back').href = `project-page.html?id=${projId}`;
+
+  /* ── Load project title and existing data from DB ─────────── */
+  async function initProject() {
+    if (!projId) return;
+    try {
+      const r = await fetch(`controllers/projects/detail.php?id=${projId}`);
+      const j = await r.json();
+      if (!j.ok) return;
+      document.title = `Cargar Datos - ${j.data.nombre}`;
+      document.getElementById('u-proj-name').textContent = j.data.nombre;
+
+      const existing = j.data.datos_importados;
+      if (existing && typeof existing === 'object' && Object.keys(existing).length > 0) {
+        document.getElementById('json-input').value = JSON.stringify(existing, null, 2);
+        renderPreview(existing);
+      }
+    } catch {}
+  }
+
+  initProject();
 
   /* ── tab switch ───────────────────────────── */
   let activeFmt = 'json';
@@ -89,9 +103,19 @@
       : '';
   }
 
+  /* ── save helper ─────────────────────────── */
+  async function saveToDb(datos_importados) {
+    const res  = await fetch('controllers/projects/import-data.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: projId, datos_importados }),
+    });
+    return res.json();
+  }
+
   /* ── JSON import ─────────────────────────── */
-  document.getElementById('btn-import-json').addEventListener('click', () => {
-    const raw = document.getElementById('json-input').value.trim();
+  document.getElementById('btn-import-json').addEventListener('click', async () => {
+    const raw   = document.getElementById('json-input').value.trim();
     const errEl = document.getElementById('json-error');
     const errTxt = document.getElementById('json-error-text');
     document.getElementById('json-input').classList.remove('error');
@@ -117,12 +141,14 @@
       return;
     }
 
-    // Merge with existing override
-    const existing = JSON.parse(localStorage.getItem(overrideKey) || '{}');
-    const merged = { ...existing, ...data };
-    localStorage.setItem(overrideKey, JSON.stringify(merged));
-    renderPreview(merged);
-    showToast('Datos JSON importados y guardados correctamente');
+    try {
+      const json = await saveToDb(data);
+      if (!json.ok) { showToast('Error al guardar: ' + (json.error || '')); return; }
+      renderPreview(json.data);
+      showToast('Datos JSON importados y guardados correctamente');
+    } catch {
+      showToast('Error de conexión al guardar');
+    }
   });
 
   /* ── CSV import ──────────────────────────── */
@@ -147,8 +173,8 @@
     return rows;
   }
 
-  document.getElementById('btn-import-csv').addEventListener('click', () => {
-    const raw = document.getElementById('csv-input').value.trim();
+  document.getElementById('btn-import-csv').addEventListener('click', async () => {
+    const raw   = document.getElementById('csv-input').value.trim();
     const errEl = document.getElementById('csv-error');
     const errTxt = document.getElementById('csv-error-text');
     document.getElementById('csv-input').classList.remove('error');
@@ -182,11 +208,14 @@
       return;
     }
 
-    const existing = JSON.parse(localStorage.getItem(overrideKey) || '{}');
-    existing.publicaciones = pubs;
-    localStorage.setItem(overrideKey, JSON.stringify(existing));
-    renderPreview(existing);
-    showToast(`${pubs.length} publicaciones importadas correctamente`);
+    try {
+      const json = await saveToDb({ publicaciones: pubs });
+      if (!json.ok) { showToast('Error al guardar: ' + (json.error || '')); return; }
+      renderPreview(json.data);
+      showToast(`${pubs.length} publicaciones importadas correctamente`);
+    } catch {
+      showToast('Error de conexión al guardar');
+    }
   });
 
   /* ── template downloads ──────────────────── */
@@ -200,41 +229,32 @@
 
   document.getElementById('btn-dl-json').addEventListener('click', () => {
     const template = {
-      beneficiarios: 520,
-      beneficiarios_cambio: "+24% vs. inicio",
-      voluntarios: 47,
-      voluntarios_cambio: "+12 este mes",
-      actividades: 64,
-      actividades_periodo: "Último semestre",
-      metrica4_valor: "93,600",
-      metrica4_label: "Comidas servidas",
-      metrica4_periodo: "Total proyecto",
+      beneficiarios: 0,
+      beneficiarios_cambio: "",
+      voluntarios: 0,
+      voluntarios_cambio: "",
+      actividades: 0,
+      actividades_periodo: "",
+      metrica4_valor: "",
+      metrica4_label: "",
+      metrica4_periodo: "",
       progreso: [
-        { label: "Meta de beneficiarios (520/600)", pct: 87 },
-        { label: "Objetivo de voluntarios (47/50)", pct: 94 },
-        { label: "Metas de actividades (64/80)", pct: 80 },
-        { label: "Comidas servidas (93,600/120,000)", pct: 78 }
+        { label: "", pct: 0 },
+        { label: "", pct: 0 },
+        { label: "", pct: 0 },
+        { label: "", pct: 0 }
       ],
       publicaciones: [
-        { titulo: "Celebramos 500 comidas servidas en un solo día", fecha: "10 de marzo, 2026", tipo: "Artículo" },
-        { titulo: "Este proyecto salvó a mi familia - Testimonio de Laura M.", fecha: "5 de marzo, 2026", tipo: "Testimonio" },
-        { titulo: "Informe mensual de impacto - Febrero 2026", fecha: "1 de marzo, 2026", tipo: "Reporte" }
+        { titulo: "", fecha: "", tipo: "" }
       ],
-      grafica_meses: ["Oct", "Nov", "Dic", "Ene", "Feb", "Mar"],
-      grafica_beneficiarios: [435, 455, 462, 472, 465, 476],
-      grafica_actividades: [8, 10, 12, 11, 14, 9]
+      grafica_meses: ["", "", "", "", "", ""],
+      grafica_beneficiarios: [0, 0, 0, 0, 0, 0],
+      grafica_actividades: [0, 0, 0, 0, 0, 0]
     };
     download(`plantilla_proyecto_${projId}.json`, JSON.stringify(template, null, 2), 'application/json');
   });
 
   document.getElementById('btn-dl-csv').addEventListener('click', () => {
-    const content = `titulo,fecha,tipo\n"Celebramos 500 comidas servidas en un solo día","10 de marzo, 2026",Artículo\n"Este proyecto salvó a mi familia - Testimonio de Laura M.","5 de marzo, 2026",Testimonio\n"Informe mensual de impacto - Febrero 2026","1 de marzo, 2026",Reporte\n"Feria comunitaria - Próxima semana","28 de febrero, 2026",Evento`;
+    const content = `titulo,fecha,tipo\n"","",""`;
     download(`plantilla_publicaciones_${projId}.csv`, content, 'text/csv');
   });
-
-  /* ── load existing override on page load ─── */
-  const existing = JSON.parse(localStorage.getItem(overrideKey) || 'null');
-  if (existing && Object.keys(existing).length > 0) {
-    document.getElementById('json-input').value = JSON.stringify(existing, null, 2);
-    renderPreview(existing);
-  }

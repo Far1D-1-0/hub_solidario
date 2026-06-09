@@ -19,15 +19,15 @@
     loadCategories();
 
     /* ── Auto-fill leader from session ─────────────────── */
-    const sessionUser = JSON.parse(localStorage.getItem('user') || 'null');
-    if (sessionUser && sessionUser.loggedIn && sessionUser.nombre) {
+    getUser().then(function (sessionUser) {
+      if (!sessionUser || !sessionUser.loggedIn || !sessionUser.nombre) return;
       const liderInput = document.getElementById('pf-lider');
       if (liderInput) {
         liderInput.value = sessionUser.nombre;
         const hint = document.getElementById('pf-lider-hint');
         if (hint) hint.style.display = 'flex';
       }
-    }
+    });
 
     /* ── File upload ─────────────────────────────────────── */
     const uploadArea    = document.getElementById('upload-area');

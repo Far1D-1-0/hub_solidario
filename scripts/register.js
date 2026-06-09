@@ -95,8 +95,6 @@
           return;
         }
 
-        localStorage.setItem('user', JSON.stringify(json.data));
-
         // Usuarios se logean directo; líderes/admins esperan validación
         if (json.data.loggedIn) {
           window.location.href = 'index.html';

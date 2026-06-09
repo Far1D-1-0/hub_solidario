@@ -95,9 +95,29 @@
             <span class="ci-label">Password</span>
             <span class="ci-value sec-dots">••••••••</span>
           </div>
-          <button class="sec-edit-btn" aria-label="Editar contraseña">
+          <button class="sec-edit-btn" id="pw-toggle-btn" aria-label="Editar contraseña">
             <svg width="14" height="14" fill="none" stroke="#9CA3AF" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           </button>
+        </div>
+
+        <div id="pw-change-form" style="display:none;margin-top:14px">
+          <input type="password" id="pw-current" placeholder="Contraseña actual"
+            style="display:block;width:100%;box-sizing:border-box;margin-bottom:8px;padding:9px 12px;border:1.5px solid #E5E7EB;border-radius:8px;font-size:.87rem;font-family:inherit;outline:none"/>
+          <input type="password" id="pw-new" placeholder="Nueva contraseña (mín. 6 caracteres)"
+            style="display:block;width:100%;box-sizing:border-box;margin-bottom:8px;padding:9px 12px;border:1.5px solid #E5E7EB;border-radius:8px;font-size:.87rem;font-family:inherit;outline:none"/>
+          <input type="password" id="pw-confirm" placeholder="Confirmar nueva contraseña"
+            style="display:block;width:100%;box-sizing:border-box;margin-bottom:10px;padding:9px 12px;border:1.5px solid #E5E7EB;border-radius:8px;font-size:.87rem;font-family:inherit;outline:none"/>
+          <p id="pw-msg" style="display:none;font-size:.82rem;margin-bottom:8px"></p>
+          <div style="display:flex;gap:8px">
+            <button id="pw-save"
+              style="flex:1;padding:9px;background:#1A56E8;color:white;border:none;border-radius:8px;font-weight:600;font-size:.85rem;font-family:inherit;cursor:pointer">
+              Guardar
+            </button>
+            <button id="pw-cancel"
+              style="flex:1;padding:9px;background:#F3F4F6;color:#374151;border:none;border-radius:8px;font-weight:600;font-size:.85rem;font-family:inherit;cursor:pointer">
+              Cancelar
+            </button>
+          </div>
         </div>
       </div>
 
@@ -105,6 +125,7 @@
     </div>
   </div>
 
+  <script src="scripts/session.js"></script>
   <script src="scripts/profile.js"></script>
 </body>
 </html>

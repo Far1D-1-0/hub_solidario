@@ -1,14 +1,14 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Enviar Testimonio - Proyectos Solidarios</title>
+  <title>Publicaciones - Proyectos Solidarios</title>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="content/styles.css"/>
-  <link rel="stylesheet" href="content/submit-testimonial.css"/>
+  <link rel="stylesheet" href="content/publications.css"/>
 </head>
-<body class="spage">
+<body class="pubs-page">
 
   <button id="menu-btn" aria-label="Abrir menú">
     <span></span><span></span><span></span>
@@ -40,64 +40,28 @@
     </div>
   </nav>
 
-  <div class="s-wrap">
-    <div class="s-card">
-      <a id="s-back" href="testimonials.html" class="s-back-link">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        Volver a testimonios
-      </a>
+  <div class="pub-hero">
+    <h1>Publicaciones del Proyecto</h1>
+    <p id="pub-subtitle">Cargando...</p>
+    <div class="pub-stat-row" id="pub-stat-row"></div>
+  </div>
 
-      <!-- Form view -->
-      <div id="s-form-view">
-        <h1>Testimonios de Impacto Social</h1>
-        <p class="s-sub">Comparte tu experiencia en el proyecto de servicio social</p>
-        <span class="s-project-tag" id="s-project-tag">
-          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-          Cargando proyecto...
-        </span>
+  <div class="pub-stripe"></div>
 
-        <form id="s-form" novalidate>
-          <div class="s-field">
-            <label class="s-label" for="f-name">Nombre completo</label>
-            <input class="s-input" id="f-name" type="text" placeholder="Ingresa tu nombre" autocomplete="name"/>
-            <p class="s-error-msg" id="err-name">El nombre es requerido.</p>
-          </div>
-          <div class="s-field">
-            <label class="s-label" for="f-role">Rol</label>
-            <select class="s-select" id="f-role">
-              <option value="">Selecciona tu rol</option>
-              <option value="Estudiante">Estudiante</option>
-              <option value="Beneficiario">Beneficiario</option>
-            </select>
-            <p class="s-error-msg" id="err-role">Selecciona un rol.</p>
-          </div>
-          <div class="s-field">
-            <label class="s-label" for="f-text">Testimonio</label>
-            <textarea class="s-textarea" id="f-text" placeholder="Escribe tu testimonio aquí..." maxlength="600"></textarea>
-            <div class="s-char-count" id="char-count">0 / 600</div>
-            <p class="s-error-msg" id="err-text">El testimonio debe tener al menos 20 caracteres.</p>
-          </div>
-          <button type="submit" class="s-submit-btn" id="s-submit-btn">Registrar Testimonio</button>
-        </form>
+  <div class="pub-body">
+    <div class="pub-inner">
+      <div class="pub-top-bar">
+        <a id="pub-back-link" href="catalog.html" class="pub-back">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Volver al proyecto
+        </a>
       </div>
-
-      <!-- Success view -->
-      <div class="s-success" id="s-success">
-        <div class="s-success-icon">
-          <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <h2>¡Testimonio enviado!</h2>
-        <p>Tu testimonio ha sido enviado y está pendiente de aprobación por el líder del proyecto. Aparecerá públicamente una vez que sea revisado.</p>
-        <div class="s-success-actions">
-          <a id="ss-back-btn" href="testimonials.html" class="s-btn-sec">Ver testimonios</a>
-          <a id="ss-proj-btn" href="project-page.html" class="s-btn-prim">Ir al proyecto</a>
-        </div>
-      </div>
+      <div class="pub-list" id="pub-list"></div>
     </div>
   </div>
 
   <script src="scripts/session.js"></script>
   <script src="scripts/main.js"></script>
-  <script src="scripts/submit-testimonial.js"></script>
+  <script src="scripts/publications.js"></script>
 </body>
 </html>

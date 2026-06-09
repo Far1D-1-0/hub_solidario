@@ -13,10 +13,17 @@
     }
 
     function renderPublicProfile(data) {
+      const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+                      'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
       document.getElementById('profile-name').textContent  = data.nombre;
       document.getElementById('profile-role').textContent  = data.rol_nombre || 'Líder Social';
-      document.getElementById('profile-email').textContent = '—';
-      document.getElementById('profile-since').textContent = '—';
+      document.getElementById('profile-email').textContent = data.email || '—';
+      if (data.fecha_registro) {
+        const d = new Date(data.fecha_registro);
+        document.getElementById('profile-since').textContent = `${months[d.getMonth()]} ${d.getFullYear()}`;
+      } else {
+        document.getElementById('profile-since').textContent = '—';
+      }
 
       document.getElementById('profile-about-section').style.display = data.about ? '' : 'none';
       if (data.about) document.getElementById('profile-about').textContent = data.about;
@@ -94,53 +101,100 @@
       backLink.lastChild.textContent = ' Catálogo';
 
     } else {
-      // Own profile
-      const user = JSON.parse(localStorage.getItem('user') || '{}');
-
-      const displayName = user.nombre || user.username?.split('@')[0] || 'Usuario';
-      document.getElementById('profile-name').textContent = displayName;
-      document.getElementById('profile-role').textContent = user.rol_nombre || user.rol || '';
-
-      const emailVal = user.email;
-      if (emailVal) document.getElementById('profile-email').textContent = emailVal;
-
-      if (user.memberSince) {
-        document.getElementById('profile-since').textContent = user.memberSince;
-      } else {
-        const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
-                        'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-        const now = new Date();
-        document.getElementById('profile-since').textContent = `${months[now.getMonth()]} ${now.getFullYear()}`;
-      }
-
-      if (user.about) {
-        document.getElementById('profile-about').textContent = user.about;
-      } else {
-        document.getElementById('profile-about-section').style.display = 'none';
-      }
-
-      const contactMap = {
-        telefono:  ['contact-phone',     'profile-phone'],
-        linktree:  ['contact-linktree',  'profile-linktree'],
-        instagram: ['contact-instagram', 'profile-instagram'],
-        linkedin:  ['contact-linkedin',  'profile-linkedin'],
-      };
-      Object.entries(contactMap).forEach(([key, [rowId, valId]]) => {
-        if (user[key]) {
-          document.getElementById(valId).textContent = user[key];
-          document.getElementById(rowId).style.display = '';
+      // Own profile — load from session + DB
+      (async () => {
+        const user = await getUser();
+        if (!user || !user.loggedIn) {
+          window.location.href = 'login.html';
+          return;
         }
-      });
 
-      renderInitials(displayName);
+        // Render extended profile (about, social, projects) using the shared renderer
+        try {
+          const res  = await fetch('controllers/profile/own.php');
+          const json = await res.json();
+          if (json.ok) renderPublicProfile(json.data);
+        } catch {}
 
-      document.getElementById('edit-profile-btn').addEventListener('click', () => {
-        window.location.href = 'profile-edit.html';
-      });
+        // Owner-specific overrides applied after renderPublicProfile
+        const displayName = user.nombre || 'Usuario';
+        document.getElementById('profile-name').textContent = displayName;
+        document.getElementById('profile-role').textContent = user.rol_nombre || '';
+        if (user.email) document.getElementById('profile-email').textContent = user.email;
 
-      document.getElementById('logout-btn').addEventListener('click', async () => {
-        try { await fetch('controllers/auth/logout.php', { method: 'POST' }); } catch {}
-        localStorage.removeItem('user');
-        window.location.href = 'index.html';
-      });
+        renderInitials(displayName);
+
+        const backLink = document.querySelector('.back-link');
+        if (backLink) {
+          backLink.href = 'index.html';
+          if (backLink.lastChild) backLink.lastChild.textContent = ' Inicio';
+        }
+
+        document.getElementById('edit-profile-btn').style.display = '';
+        document.getElementById('logout-btn').style.display = '';
+
+        document.getElementById('edit-profile-btn').addEventListener('click', () => {
+          window.location.href = 'profile-edit.html';
+        });
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+          try { await fetch('controllers/auth/logout.php', { method: 'POST' }); } catch {}
+          clearUser();
+          window.location.href = 'index.html';
+        });
+
+        // Password change form
+        const pwForm    = document.getElementById('pw-change-form');
+        const pwMsg     = document.getElementById('pw-msg');
+        document.getElementById('pw-toggle-btn').addEventListener('click', () => {
+          pwForm.style.display = pwForm.style.display === 'none' ? '' : 'none';
+          pwMsg.style.display  = 'none';
+          document.getElementById('pw-current').value = '';
+          document.getElementById('pw-new').value     = '';
+          document.getElementById('pw-confirm').value = '';
+        });
+        document.getElementById('pw-cancel').addEventListener('click', () => {
+          pwForm.style.display = 'none';
+        });
+        document.getElementById('pw-save').addEventListener('click', async () => {
+          const current = document.getElementById('pw-current').value.trim();
+          const nuevo   = document.getElementById('pw-new').value.trim();
+          const confirm = document.getElementById('pw-confirm').value.trim();
+
+          const showMsg = (text, color) => {
+            pwMsg.textContent    = text;
+            pwMsg.style.color    = color;
+            pwMsg.style.display  = '';
+          };
+
+          if (!current || !nuevo || !confirm) return showMsg('Completa todos los campos.', '#EF4444');
+          if (nuevo.length < 6)               return showMsg('La nueva contraseña debe tener al menos 6 caracteres.', '#EF4444');
+          if (nuevo !== confirm)               return showMsg('Las contraseñas no coinciden.', '#EF4444');
+
+          const btn = document.getElementById('pw-save');
+          btn.disabled    = true;
+          btn.textContent = 'Guardando…';
+
+          try {
+            const res  = await fetch('controllers/auth/change-password.php', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ contrasena_actual: current, contrasena_nueva: nuevo }),
+            });
+            const json = await res.json();
+            if (!json.ok) {
+              showMsg(json.error || 'Error al cambiar contraseña.', '#EF4444');
+            } else {
+              showMsg('Contraseña actualizada correctamente.', '#16A34A');
+              document.getElementById('pw-current').value = '';
+              document.getElementById('pw-new').value     = '';
+              document.getElementById('pw-confirm').value = '';
+            }
+          } catch {
+            showMsg('Error de conexión.', '#EF4444');
+          } finally {
+            btn.disabled    = false;
+            btn.textContent = 'Guardar';
+          }
+        });
+      })();
     }

@@ -13,11 +13,9 @@
   }
 
   // ── Auth check via session ───────────────────────────────────
-  function canModerate() {
-    try {
-      const u = JSON.parse(localStorage.getItem('user') || 'null');
-      return u && u.loggedIn && (u.rol_codigo === 'ADMIN' || u.rol_codigo === 'LIDER');
-    } catch { return false; }
+  async function canModerate() {
+    const u = await getUser();
+    return u && u.loggedIn && (u.rol_codigo === 'ADMIN' || u.rol_codigo === 'LIDER');
   }
 
   // ── Fetch one tab's data ─────────────────────────────────────

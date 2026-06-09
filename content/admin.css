@@ -144,6 +144,25 @@
     .req-table-title { font-size: 1rem; font-weight: 700; color: #111827; margin-bottom: 16px; }
     .req-empty { text-align: center; padding: 32px; color: #9CA3AF; font-size: .9rem; }
 
+    .sol-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0; border-bottom: 1px solid #F3F4F6;
+      gap: 16px;
+    }
+    .sol-item:last-child { border-bottom: none; }
+    .sol-name { font-weight: 600; font-size: .92rem; color: #111827; }
+    .sol-meta { font-size: .8rem; color: #6B7280; margin-top: 2px; }
+    .sol-actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .sol-reject, .sol-approve {
+      padding: 7px 16px; border-radius: 8px; border: none;
+      cursor: pointer; font-size: .83rem; font-weight: 600;
+      font-family: inherit; transition: all .15s;
+    }
+    .sol-reject  { background: #FEF2F2; color: #EF4444; }
+    .sol-reject:hover  { background: #FEE2E2; }
+    .sol-approve { background: #F0FDF4; color: #16A34A; }
+    .sol-approve:hover { background: #DCFCE7; }
+
     @media (max-width: 860px) {
       .admin-stats { grid-template-columns: repeat(2, 1fr); }
     }

@@ -1,0 +1,110 @@
+    body.pubs-page { background: #0f2460; min-height: 100vh; }
+
+    /* ── hero ── */
+    .pub-hero {
+      background: linear-gradient(160deg, #1A56E8 0%, #0f2460 100%);
+      text-align: center;
+      padding: 72px 24px 48px;
+      color: white;
+    }
+    .pub-hero h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .pub-hero p { font-size: .95rem; opacity: .78; margin-bottom: 28px; }
+    .pub-stat-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .pub-stat-chip {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 14px;
+      padding: 10px 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+    }
+    .pub-stat-chip .sc-num {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+    .pub-stat-chip .sc-lbl { font-size: .78rem; opacity: .75; }
+
+    /* ── stripe ── */
+    .pub-stripe { background: #E8690C; height: 80px; }
+
+    /* ── body ── */
+    .pub-body { background: #0f2460; padding: 0 20px 80px; }
+    .pub-inner { max-width: 780px; margin: 0 auto; padding-top: 32px; }
+
+    .pub-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .pub-back {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: rgba(255,255,255,.75);
+      text-decoration: none;
+      font-size: .83rem;
+      font-weight: 600;
+      transition: color .15s;
+    }
+    .pub-back:hover { color: white; }
+
+    /* ── publication cards ── */
+    .pub-list { display: flex; flex-direction: column; gap: 16px; }
+
+    .pub-card {
+      background: white;
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.18);
+    }
+    .pub-card-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .pub-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1A56E8, #38BDF8);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: .95rem;
+      flex-shrink: 0;
+    }
+    .pub-author { font-weight: 700; font-size: .88rem; color: #111827; }
+    .pub-date   { font-size: .76rem; color: #9CA3AF; margin-top: 1px; }
+    .pub-content {
+      font-size: .9rem;
+      color: #374151;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .pub-empty {
+      text-align: center;
+      padding: 60px 0;
+      color: rgba(255,255,255,.5);
+      font-size: .92rem;
+    }
+
+    @media (max-width: 560px) {
+      .pub-hero h1 { font-size: 1.6rem; }
+      .pub-card { padding: 18px; }
+    }

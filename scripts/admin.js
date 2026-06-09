@@ -1,11 +1,10 @@
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-
-    // Populate navbar user info
-    const name = user.nombre || 'Administrador';
-    document.getElementById('admin-name').textContent    = name;
-    document.getElementById('admin-role').textContent    = user.rol_nombre || user.rol || 'Administrador';
-    document.getElementById('welcome-title').textContent = `Bienvenido, ${name}`;
-    document.getElementById('stat-rol').textContent      = user.rol_nombre || user.rol || '—';
+    getUser().then(function (user) {
+      const name = user.nombre || 'Administrador';
+      document.getElementById('admin-name').textContent    = name;
+      document.getElementById('admin-role').textContent    = user.rol_nombre || 'Administrador';
+      document.getElementById('welcome-title').textContent = `Bienvenido, ${name}`;
+      document.getElementById('stat-rol').textContent      = user.rol_nombre || '—';
+    });
 
     // Tab switching
     const tabDash    = document.getElementById('tab-dashboard');
@@ -15,18 +14,16 @@
 
     tabDash.addEventListener('click', () => {
       tabDash.classList.add('active'); tabSol.classList.remove('active');
-      panelDash.style.display = ''; panelSol.style.display = 'none';
+      panelDash.style.display = 'block'; panelSol.style.display = 'none';
     });
     tabSol.addEventListener('click', () => {
       tabSol.classList.add('active'); tabDash.classList.remove('active');
-      panelSol.style.display = ''; panelDash.style.display = 'none';
+      panelSol.style.display = 'block'; panelDash.style.display = 'none';
       loadSolicitudes();
     });
 
-    // Logout
-    document.getElementById('admin-logout').addEventListener('click', async () => {
-      try { await fetch('controllers/auth/logout.php', { method: 'POST' }); } catch {}
-      localStorage.removeItem('user');
+    // Volver al inicio sin cerrar sesión
+    document.getElementById('admin-back').addEventListener('click', () => {
       window.location.href = 'index.html';
     });
 
@@ -51,8 +48,8 @@
       if (solicitudesLoaded) return;
       solicitudesLoaded = true;
 
-      const container = document.getElementById('solicitudes-panel');
-      container.innerHTML = '<p style="padding:24px;color:#64748B">Cargando solicitudes...</p>';
+      const list = document.getElementById('req-list');
+      list.innerHTML = '<p style="color:#64748B;text-align:center;padding:16px 0">Cargando solicitudes...</p>';
 
       try {
         const res  = await fetch('controllers/admin/pending-users.php?estado=PENDIENTE');
@@ -61,26 +58,23 @@
 
         const pending = json.data;
         if (!pending.length) {
-          container.innerHTML = '<p style="padding:24px;color:#64748B">No hay solicitudes pendientes.</p>';
+          list.innerHTML = '<p style="color:#9CA3AF;text-align:center;padding:24px 0">No hay solicitudes pendientes.</p>';
           return;
         }
 
-        container.innerHTML = `
-          <div class="solicitudes-list">
-            ${pending.map(u => `
-              <div class="sol-item" data-id="${u.id}">
-                <div class="sol-info">
-                  <div class="sol-name">${u.nombre}</div>
-                  <div class="sol-meta">${u.email} · ${u.rol_nombre}</div>
-                </div>
-                <div class="sol-actions">
-                  <button class="sol-reject"  data-id="${u.id}" data-accion="RECHAZADO">Rechazar</button>
-                  <button class="sol-approve" data-id="${u.id}" data-accion="VALIDADO">Aprobar</button>
-                </div>
-              </div>`).join('')}
-          </div>`;
+        list.innerHTML = pending.map(u => `
+          <div class="sol-item" data-id="${u.id}">
+            <div class="sol-info">
+              <div class="sol-name">${u.nombre}</div>
+              <div class="sol-meta">${u.email} &middot; ${u.rol_nombre}</div>
+            </div>
+            <div class="sol-actions">
+              <button class="sol-reject"  data-id="${u.id}" data-accion="RECHAZADO">Rechazar</button>
+              <button class="sol-approve" data-id="${u.id}" data-accion="VALIDADO">Aprobar</button>
+            </div>
+          </div>`).join('');
 
-        container.querySelectorAll('[data-accion]').forEach(btn => {
+        list.querySelectorAll('[data-accion]').forEach(btn => {
           btn.addEventListener('click', async () => {
             const id     = parseInt(btn.dataset.id, 10);
             const accion = btn.dataset.accion;
@@ -92,15 +86,18 @@
               });
               const j = await r.json();
               if (!j.ok) { alert(j.error || 'Error al procesar'); return; }
-              const item = container.querySelector(`.sol-item[data-id="${id}"]`);
+              const item = list.querySelector(`.sol-item[data-id="${id}"]`);
               if (item) item.remove();
+              if (!list.querySelector('.sol-item')) {
+                list.innerHTML = '<p style="color:#9CA3AF;text-align:center;padding:24px 0">No hay solicitudes pendientes.</p>';
+              }
               solicitudesLoaded = false;
               await loadStats();
             } catch { alert('Error de conexión'); }
           });
         });
       } catch (err) {
-        container.innerHTML = `<p style="padding:24px;color:#EF4444">Error: ${err.message}</p>`;
+        list.innerHTML = `<p style="color:#EF4444;text-align:center;padding:16px 0">Error: ${err.message}</p>`;
       }
     }
 

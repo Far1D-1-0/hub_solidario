@@ -35,7 +35,7 @@
   }
 
   /* ─── FILL PAGE ─────────────────────────────────────────────── */
-  function fillPage(project) {
+  function fillPage(project, user) {
     document.title = project.nombre + ' - Proyectos Solidarios';
     document.getElementById('pp-cover').src   = project.imagen || '';
     document.getElementById('pp-cover').alt   = project.nombre;
@@ -136,7 +136,7 @@
     }
 
     // ── Leader moderation link ────────────────────────────────────
-    const me = (() => { try { return JSON.parse(localStorage.getItem('user') || 'null'); } catch { return null; } })();
+    const me = user || null;
     const isLeader = me && me.loggedIn && (
       me.id === project.lider_id ||
       me.rol_codigo === 'ADMIN'
@@ -150,7 +150,7 @@
         title: 'Publicaciones',
         sub: 'Historias de impacto, noticias y actualizaciones del proyecto',
         count: (project.publicaciones || []).length + ' publicaciones',
-        href: '#'
+        href: `publications.html?id=${projId}`
       },
       {
         icon: `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>`,
@@ -167,7 +167,7 @@
         title: 'KPIs del proyecto',
         sub: 'Indicadores clave de desempeño y métricas de impacto',
         count: kpis.length + ' indicadores',
-        href: '#'
+        href: `kpis.html?id=${projId}`
       }
     ];
     document.getElementById('content-grid').innerHTML = contentCards.map(c => `
@@ -401,8 +401,6 @@
   /* ─── PANEL ─────────────────────────────────────────────────── */
   let settings    = { palette: 'default', widgetOrder: ['description','dashboard','progress','content','publications'], hiddenWidgets: [] };
   let tempPalette = 'default';
-  const storageKey = `proj_settings_${projId}`;
-  try { const s = JSON.parse(localStorage.getItem(storageKey) || 'null'); if (s) settings = { ...settings, ...s }; } catch {}
 
   function openPanel() {
     tempPalette = settings.palette;
@@ -417,7 +415,11 @@
       settings.palette       = tempPalette;
       settings.widgetOrder   = getCurrentOrder();
       settings.hiddenWidgets = getCurrentHidden();
-      localStorage.setItem(storageKey, JSON.stringify(settings));
+      fetch('controllers/projects/settings.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: projId, ...settings }),
+      }).catch(() => {});
     } else {
       applyPalette(settings.palette);
       applyWidgetOrder(settings.widgetOrder);
@@ -479,10 +481,6 @@
     const preview   = document.getElementById('img-preview');
     const fileInput = document.getElementById('img-file-input');
 
-    // Persist cover per project in localStorage (UI only)
-    const ov = JSON.parse(localStorage.getItem(`project_override_${projId}`) || '{}');
-    if (ov.imagen) coverEl.src = ov.imagen;
-
     let debounce;
     urlInput.addEventListener('input', () => {
       clearTimeout(debounce);
@@ -510,14 +508,22 @@
     document.getElementById('img-btn-cancel').addEventListener('click', closeModal);
     overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
 
-    document.getElementById('img-btn-save').addEventListener('click', () => {
+    document.getElementById('img-btn-save').addEventListener('click', async () => {
       const src = preview._base64 || urlInput.value.trim() || preview.src;
       if (!src || src === location.href) return;
-      coverEl.src = src;
-      const saved = JSON.parse(localStorage.getItem(`project_override_${projId}`) || '{}');
-      saved.imagen = src;
-      localStorage.setItem(`project_override_${projId}`, JSON.stringify(saved));
-      closeModal();
+      try {
+        const res  = await fetch('controllers/projects/update-cover.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: projId, imagen: src }),
+        });
+        const json = await res.json();
+        if (!json.ok) { alert(json.error || 'Error al guardar la imagen'); return; }
+        coverEl.src = src;
+        closeModal();
+      } catch {
+        alert('Error de conexión al guardar la imagen');
+      }
     });
   })();
 
@@ -528,21 +534,31 @@
       return;
     }
 
-    let project;
+    let project, user;
     try {
-      const res  = await fetch(`controllers/projects/detail.php?id=${projId}`);
-      const json = await res.json();
-      if (!json.ok) throw new Error(json.error || 'No encontrado');
-      project = json.data;
+      const [projRes, userVal] = await Promise.all([
+        fetch(`controllers/projects/detail.php?id=${projId}`).then(r => r.json()),
+        getUser(),
+      ]);
+      if (!projRes.ok) throw new Error(projRes.error || 'No encontrado');
+      project = projRes.data;
+      user    = userVal;
     } catch (err) {
       document.getElementById('pp-hero-desc').textContent = 'Error al cargar el proyecto: ' + err.message;
       return;
     }
 
+    // Load settings from DB
+    try {
+      const sr = await fetch(`controllers/projects/settings.php?id=${projId}`);
+      const sj = await sr.json();
+      if (sj.ok && sj.data) settings = { ...settings, ...sj.data };
+    } catch {}
+
     document.getElementById('del-proj-name').textContent = project.nombre;
     document.getElementById('btn-upload-data').href = `upload-data.html?id=${projId}`;
 
-    fillPage(project);
+    fillPage(project, user);
 
     applyPalette(settings.palette);
     applyWidgetOrder(settings.widgetOrder);

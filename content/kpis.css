@@ -1,0 +1,169 @@
+    body.kpis-page { background: #1e0a4b; min-height: 100vh; }
+
+    /* ── hero ── */
+    .kpi-hero {
+      background: linear-gradient(160deg, #7C3AED 0%, #1e0a4b 100%);
+      text-align: center;
+      padding: 72px 24px 48px;
+      color: white;
+    }
+    .kpi-hero h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .kpi-hero p { font-size: .95rem; opacity: .78; margin-bottom: 28px; }
+    .kpi-stat-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .kpi-stat-chip {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 14px;
+      padding: 10px 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+    }
+    .kpi-stat-chip .sc-num {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+    .kpi-stat-chip .sc-lbl { font-size: .78rem; opacity: .75; }
+
+    /* ── stripe ── */
+    .kpi-stripe { background: #E8690C; height: 80px; }
+
+    /* ── body ── */
+    .kpi-body { background: #1e0a4b; padding: 0 20px 80px; }
+    .kpi-inner { max-width: 1080px; margin: 0 auto; padding-top: 32px; }
+
+    .kpi-top-bar {
+      display: flex;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+    .kpi-back {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: rgba(255,255,255,.75);
+      text-decoration: none;
+      font-size: .83rem;
+      font-weight: 600;
+      transition: color .15s;
+    }
+    .kpi-back:hover { color: white; }
+
+    /* ── KPI grid ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .kpi-card {
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.2);
+    }
+    .kpi-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .kpi-name {
+      font-family: 'Sora', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.3;
+    }
+    .kpi-estado {
+      font-size: .72rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+      background: #F0FDF4;
+      color: #16A34A;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .kpi-desc {
+      font-size: .82rem;
+      color: #6B7280;
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    /* ── progress ── */
+    .kpi-values {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+    .kpi-current {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #111827;
+      line-height: 1;
+    }
+    .kpi-unit {
+      font-size: .8rem;
+      color: #6B7280;
+      margin-left: 4px;
+    }
+    .kpi-meta-lbl { font-size: .78rem; color: #9CA3AF; }
+    .kpi-bar-wrap {
+      height: 8px;
+      background: #F3F4F6;
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .kpi-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      transition: width .4s ease;
+    }
+    .kpi-bar-fill.pct-low  { background: #EF4444; }
+    .kpi-bar-fill.pct-mid  { background: #F97316; }
+    .kpi-bar-fill.pct-high { background: #16A34A; }
+
+    .kpi-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .kpi-pct {
+      font-size: .82rem;
+      font-weight: 700;
+      color: #374151;
+    }
+    .kpi-last-update { font-size: .74rem; color: #9CA3AF; }
+
+    .kpi-no-data {
+      font-size: .82rem;
+      color: #9CA3AF;
+      font-style: italic;
+      margin-top: 8px;
+    }
+
+    .kpi-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 0;
+      color: rgba(255,255,255,.5);
+      font-size: .92rem;
+    }
+
+    @media (max-width: 700px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+      .kpi-hero h1 { font-size: 1.6rem; }
+    }

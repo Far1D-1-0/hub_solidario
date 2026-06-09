@@ -32,7 +32,7 @@ $rows = $pdo->query('
     LEFT JOIN Usuario u      ON u.id_usuario    = p.id_usuario_lider
     JOIN  EstadoProyecto ep  ON ep.id_estado_proyecto = p.id_estado_proyecto
     WHERE ep.codigo = \'ACTIVO\'
-    ORDER BY p.fecha_creacion DESC
+    ORDER BY p.fecha_creacion DESC, p.id_proyecto DESC
 ')->fetchAll();
 
 json_ok($rows);

@@ -43,7 +43,6 @@
           return;
         }
 
-        localStorage.setItem('user', JSON.stringify(json.data));
         window.location.href = 'index.html';
       } catch {
         setError('field-pass', 'err-pass', true, 'Error de conexión, intenta de nuevo');

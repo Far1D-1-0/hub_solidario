@@ -24,6 +24,7 @@ $stmt = $pdo->prepare('
         p.operacion,
         p.porcentaje_completacion AS completacion,
         p.fecha_creacion,
+        p.datos_importados,
         c.nombre              AS categoria_nombre,
         c.color               AS categoria_color,
         c.codigo              AS categoria_codigo,
@@ -47,8 +48,9 @@ $project = $stmt->fetch();
 if (!$project) json_err('Proyecto no encontrado', 404);
 
 // Decodificar columnas JSON
-$project['objetivos'] = json_decode($project['objetivos'] ?? '[]', true) ?? [];
-$project['operacion'] = json_decode($project['operacion'] ?? '[]', true) ?? [];
+$project['objetivos']        = json_decode($project['objetivos']        ?? '[]',   true) ?? [];
+$project['operacion']        = json_decode($project['operacion']        ?? '[]',   true) ?? [];
+$project['datos_importados'] = json_decode($project['datos_importados'] ?? 'null', true) ?? (object)[];
 
 // KPIs con último resultado
 $kpis = $pdo->prepare('

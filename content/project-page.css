@@ -10,6 +10,15 @@
       min-height: 100vh;
     }
 
+    /* Ensure side-nav always appears above project-page panels */
+    body.proj-page #menu-btn    { z-index: 1500; }
+    body.proj-page #side-nav    { z-index: 1499; }
+    body.proj-page #nav-overlay { z-index: 1498; }
+
+    /* Prevent off-screen customize panel from intercepting clicks */
+    #pp-customize-panel          { pointer-events: none; }
+    #pp-customize-panel.open     { pointer-events: auto; }
+
     /* ── page wrapper ─────────────────── */
     .pp-wrap {
       max-width: 960px;

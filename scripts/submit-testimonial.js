@@ -23,10 +23,9 @@
   initProjectTitle();
 
   // Pre-fill name if logged in
-  try {
-    const u = JSON.parse(localStorage.getItem('user') || 'null');
+  getUser().then(function (u) {
     if (u && u.loggedIn && u.nombre) document.getElementById('f-name').value = u.nombre;
-  } catch {}
+  });
 
   // Char counter
   const textarea  = document.getElementById('f-text');
