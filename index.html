@@ -212,9 +212,9 @@
           </div>
           <span class="stat-trend up">↗</span>
         </div>
-        <div class="stat-number blue">5,200+</div>
+        <div class="stat-number blue" id="stat-num-beneficiarios">—</div>
         <div class="stat-label">Personas Beneficiadas</div>
-        <div class="stat-change">↑ 24% vs. año anterior</div>
+        <div class="stat-change" id="stat-sub-beneficiarios">Cargando…</div>
       </div>
 
       <div class="stat-card reveal">
@@ -226,9 +226,9 @@
           </div>
           <span class="stat-trend up">↗</span>
         </div>
-        <div class="stat-number orange">12,500</div>
+        <div class="stat-number orange" id="stat-num-horas">—</div>
         <div class="stat-label">Horas de Voluntariado</div>
-        <div class="stat-change">↑ 18% vs. año anterior</div>
+        <div class="stat-change" id="stat-sub-horas">Cargando…</div>
       </div>
 
       <div class="stat-card reveal">
@@ -240,7 +240,7 @@
           </div>
           <span class="stat-trend up">↗</span>
         </div>
-        <div class="stat-number green">15</div>
+        <div class="stat-number green" id="stat-num-ods">—</div>
         <div class="stat-label">ODS Impactados</div>
         <div class="stat-change">De 17 objetivos totales</div>
       </div>
@@ -248,92 +248,10 @@
     </div>
 
     <!-- ODS cards 4-col -->
-    <div class="ods-grid">
-
-      <div class="ods-card reveal">
-        <div class="ods-tag">
-          <div class="dot" style="background:#E11D48"></div>ODS 2
-        </div>
-        <h4>Hambre Cero</h4>
-        <div class="ods-number" style="color:#E11D48">500+</div>
-        <div class="ods-sublabel">Familias alimentadas/mes</div>
-        <div class="progress-bar"><div class="fill" style="width:85%;background:#E11D48"></div></div>
-        <div class="progress-pct">85% de meta anual</div>
-      </div>
-
-      <div class="ods-card reveal">
-        <div class="ods-tag">
-          <div class="dot" style="background:#2563EB"></div>ODS 3
-        </div>
-        <h4>Salud y Bienestar</h4>
-        <div class="ods-number" style="color:#2563EB">300+</div>
-        <div class="ods-sublabel">Pacientes atendidos/mes</div>
-        <div class="progress-bar"><div class="fill" style="width:72%;background:#2563EB"></div></div>
-        <div class="progress-pct">72% de meta anual</div>
-      </div>
-
-      <div class="ods-card reveal">
-        <div class="ods-tag">
-          <div class="dot" style="background:#7C3AED"></div>ODS 4
-        </div>
-        <h4>Educación</h4>
-        <div class="ods-number" style="color:#7C3AED">200+</div>
-        <div class="ods-sublabel">Estudiantes tutorados</div>
-        <div class="progress-bar"><div class="fill" style="width:90%;background:#7C3AED"></div></div>
-        <div class="progress-pct">90% de meta anual</div>
-      </div>
-
-      <div class="ods-card reveal">
-        <div class="ods-tag">
-          <div class="dot" style="background:#16A34A"></div>ODS 13
-        </div>
-        <h4>Acción Climática</h4>
-        <div class="ods-number" style="color:#16A34A">15</div>
-        <div class="ods-sublabel">Hectáreas restauradas</div>
-        <div class="progress-bar"><div class="fill" style="width:65%;background:#16A34A"></div></div>
-        <div class="progress-pct">65% de meta anual</div>
-      </div>
-
-    </div>
+    <div class="ods-grid" id="ods-grid"></div>
 
     <!-- ODS bottom 3-col -->
-    <div class="ods-bottom">
-
-      <div class="ods-bottom-card reveal">
-        <div class="ods-tag">
-          <svg width="14" height="14" fill="none" stroke="#2563EB" stroke-width="1.8" viewBox="0 0 24 24">
-            <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10h8M8 14h5"/>
-          </svg>
-          ODS 11: Ciudades Sostenibles
-        </div>
-        <p>40 viviendas construidas/mejoradas</p>
-        <div class="progress-bar"><div class="fill" style="width:60%;background:#2563EB"></div></div>
-      </div>
-
-      <div class="ods-bottom-card reveal">
-        <div class="ods-tag">
-          <svg width="14" height="14" fill="none" stroke="#E11D48" stroke-width="1.8" viewBox="0 0 24 24">
-            <path d="M12 21C12 21 4 14 4 9a8 8 0 0116 0c0 5-8 12-8 12z"/>
-          </svg>
-          ODS 10: Reducción Desigualdades
-        </div>
-        <p>150+ adultos mayores capacitados</p>
-        <div class="progress-bar"><div class="fill" style="width:75%;background:#E11D48"></div></div>
-      </div>
-
-      <div class="ods-bottom-card reveal">
-        <div class="ods-tag">
-          <svg width="14" height="14" fill="none" stroke="#16A34A" stroke-width="1.8" viewBox="0 0 24 24">
-            <circle cx="9" cy="7" r="4"/><path d="M2 20c0-4 3.1-7 7-7"/>
-            <circle cx="16" cy="9" r="3"/><path d="M14 20c0-3 2-5 5-5"/>
-          </svg>
-          ODS 17: Alianzas
-        </div>
-        <p>25+ organizaciones colaboradoras</p>
-        <div class="progress-bar"><div class="fill" style="width:50%;background:#16A34A"></div></div>
-      </div>
-
-    </div>
+    <div class="ods-bottom" id="ods-bottom"></div>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════

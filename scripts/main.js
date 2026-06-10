@@ -161,3 +161,87 @@ bars.forEach(bar => barObserver.observe(bar));
     })
     .catch(() => {});
 })();
+
+/* ─── IMPACTO EN LOS ODS (index only) ───────────────────────── */
+(function () {
+  const odsGrid   = document.getElementById('ods-grid');
+  const odsBottom = document.getElementById('ods-bottom');
+  if (!odsGrid || !odsBottom) return;
+
+  function fmt(n) {
+    return n > 0 ? n.toLocaleString('es-MX') : '0';
+  }
+
+  function observeNew(container) {
+    container.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    container.querySelectorAll('.progress-bar .fill').forEach(el => barObserver.observe(el));
+  }
+
+  function renderOdsCard(c) {
+    const val = c.valor_actual > 0 ? fmt(c.valor_actual) : '—';
+    const pct = c.porcentaje > 0 ? c.porcentaje + '% de meta anual' : 'Sin resultados registrados';
+    return `
+      <div class="ods-card reveal">
+        <div class="ods-tag">
+          <div class="dot" style="background:${c.color}"></div>ODS ${c.ods_numero}
+        </div>
+        <h4>${c.ods_nombre}</h4>
+        <div class="ods-number" style="color:${c.color}">${val}</div>
+        <div class="ods-sublabel">${c.etiqueta}</div>
+        <div class="progress-bar">
+          <div class="fill" style="width:${c.porcentaje}%;background:${c.color}"></div>
+        </div>
+        <div class="progress-pct">${pct}</div>
+      </div>`;
+  }
+
+  function renderOdsBottomCard(c) {
+    const desc = c.valor_actual > 0
+      ? fmt(c.valor_actual) + ' ' + c.etiqueta.toLowerCase()
+      : 'Sin resultados registrados';
+    return `
+      <div class="ods-bottom-card reveal">
+        <div class="ods-tag">
+          <svg width="14" height="14" fill="none" stroke="${c.color}" stroke-width="1.8" viewBox="0 0 24 24">
+            <circle cx="9" cy="7" r="4"/><path d="M2 20c0-4 3.1-7 7-7"/>
+            <circle cx="16" cy="9" r="3"/><path d="M14 20c0-3 2-5 5-5"/>
+          </svg>
+          ODS ${c.ods_numero}: ${c.ods_nombre}
+        </div>
+        <p>${desc}</p>
+        <div class="progress-bar">
+          <div class="fill" style="width:${c.porcentaje}%;background:${c.color}"></div>
+        </div>
+      </div>`;
+  }
+
+  fetch('controllers/dashboard/impact.php')
+    .then(r => r.json())
+    .then(json => {
+      if (!json.ok) return;
+      const t = json.data.totales;
+      const cats = json.data.por_categoria || [];
+
+      // Stat cards
+      const elBenef = document.getElementById('stat-num-beneficiarios');
+      const elSubB  = document.getElementById('stat-sub-beneficiarios');
+      const elHoras = document.getElementById('stat-num-horas');
+      const elSubH  = document.getElementById('stat-sub-horas');
+      const elOds   = document.getElementById('stat-num-ods');
+
+      if (elBenef) elBenef.textContent = fmt(t.beneficiarios);
+      if (elSubB)  elSubB.textContent  = t.proyectos_activos + ' proyecto' + (t.proyectos_activos !== 1 ? 's' : '') + ' activo' + (t.proyectos_activos !== 1 ? 's' : '');
+      if (elHoras) elHoras.textContent = fmt(t.horas_voluntariado);
+      if (elSubH)  elSubH.textContent  = t.proyectos_activos + ' proyecto' + (t.proyectos_activos !== 1 ? 's' : '') + ' activo' + (t.proyectos_activos !== 1 ? 's' : '');
+      if (elOds)   elOds.textContent   = t.ods_impactados;
+
+      // ODS grid (primeras 4 categorías)
+      odsGrid.innerHTML = cats.slice(0, 4).map(renderOdsCard).join('');
+      observeNew(odsGrid);
+
+      // ODS bottom (categorías 5-7)
+      odsBottom.innerHTML = cats.slice(4).map(renderOdsBottomCard).join('');
+      observeNew(odsBottom);
+    })
+    .catch(() => {});
+})();
