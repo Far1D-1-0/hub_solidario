@@ -31,6 +31,7 @@
       document.querySelectorAll('.u-tab').forEach(b => b.classList.toggle('active', b.dataset.fmt === activeFmt));
       document.getElementById('panel-json').style.display = activeFmt === 'json' ? '' : 'none';
       document.getElementById('panel-csv').style.display  = activeFmt === 'csv'  ? '' : 'none';
+      document.getElementById('panel-kpi').style.display  = activeFmt === 'kpi'  ? '' : 'none';
     });
   });
 
@@ -218,6 +219,87 @@
     }
   });
 
+  /* ── KPI file upload ────────────────────── */
+  (function initKpiUpload() {
+    const zone      = document.getElementById('kpi-file-zone');
+    const fileInput = document.getElementById('kpi-file-input');
+    const fileLabel = document.getElementById('kpi-file-name');
+    const errEl     = document.getElementById('kpi-error');
+    const errTxt    = document.getElementById('kpi-error-text');
+    const resultEl  = document.getElementById('kpi-result');
+
+    let selectedFile  = null;
+    let selectedTipo  = 'histograma';
+
+    // Tipo de gráfica selector
+    document.querySelectorAll('.u-tipo-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.u-tipo-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedTipo = btn.dataset.tipo;
+        document.querySelectorAll('.u-tipo-hint').forEach(h => h.style.display = 'none');
+        const hint = document.getElementById('tipo-hint-' + selectedTipo);
+        if (hint) hint.style.display = '';
+      });
+    });
+
+    zone.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', () => {
+      const f = fileInput.files[0];
+      if (!f) return;
+      selectedFile = f;
+      fileLabel.textContent = f.name + ' (' + (f.size / 1024).toFixed(1) + ' KB)';
+      zone.style.borderColor = '#16A34A';
+      errEl.classList.remove('show');
+      resultEl.style.display = 'none';
+      fileInput.value = '';
+    });
+
+    document.getElementById('btn-upload-kpi').addEventListener('click', async () => {
+      errEl.classList.remove('show');
+      resultEl.style.display = 'none';
+      if (!selectedFile) {
+        errTxt.textContent = 'Selecciona un archivo primero.';
+        errEl.classList.add('show');
+        return;
+      }
+      const btn = document.getElementById('btn-upload-kpi');
+      btn.disabled = true;
+      btn.textContent = 'Subiendo…';
+
+      try {
+        const fd = new FormData();
+        fd.append('file', selectedFile);
+        fd.append('id_proyecto', String(projId));
+        fd.append('tipo_grafica', selectedTipo);
+
+        const res  = await fetch('controllers/kpis/import-file.php', { method: 'POST', body: fd });
+        const json = await res.json();
+
+        if (!json.ok) {
+          errTxt.textContent = json.error || 'Error al importar.';
+          errEl.classList.add('show');
+          return;
+        }
+        const d = json.data;
+        const errHtml = d.errores && d.errores.length
+          ? `<ul style="margin:6px 0 0;padding-left:18px;color:#EF4444;font-size:.77rem">${d.errores.map(e => `<li>${e}</li>`).join('')}</ul>`
+          : '';
+        resultEl.innerHTML = `
+          <strong style="color:#16A34A">✓ Importación completada</strong><br>
+          Archivo guardado en: <code style="font-size:.75rem">${d.archivo}</code><br>
+          <strong>${d.importados}</strong> registros importados · <strong>${d.omitidos}</strong> omitidos
+          ${errHtml}`;
+        resultEl.style.display = 'block';
+        zone.style.borderColor = '';
+        selectedFile = null;
+        fileLabel.textContent = 'Haz clic para seleccionar un archivo .csv o .json';
+        showToast(`${d.importados} registros de KPI importados al servidor`);
+      } catch { errTxt.textContent = 'Error de conexión.'; errEl.classList.add('show'); }
+      finally { btn.disabled = false; btn.innerHTML = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Subir e importar al servidor'; }
+    });
+  })();
+
   /* ── template downloads ──────────────────── */
   function download(filename, content, type) {
     const a = document.createElement('a');
@@ -257,4 +339,32 @@
   document.getElementById('btn-dl-csv').addEventListener('click', () => {
     const content = `titulo,fecha,tipo\n"","",""`;
     download(`plantilla_publicaciones_${projId}.csv`, content, 'text/csv');
+  });
+
+  document.getElementById('btn-dl-kpi-csv').addEventListener('click', () => {
+    const tipo = document.querySelector('.u-tipo-btn.active')?.dataset.tipo || 'histograma';
+    const examples = {
+      histograma: [
+        'kpi_nombre,fecha,valor',
+        '"Nombre exacto del KPI",2024-01-01,0',
+        '"Nombre exacto del KPI",2024-02-01,0',
+        '"Nombre exacto del KPI",2024-03-01,0',
+      ],
+      puntos: [
+        'kpi_nombre,fecha,valor',
+        '"Nombre exacto del KPI",2024-01-07,0',
+        '"Nombre exacto del KPI",2024-01-14,0',
+        '"Nombre exacto del KPI",2024-01-21,0',
+        '"Nombre exacto del KPI",2024-01-28,0',
+      ],
+      pie: [
+        'kpi_nombre,fecha,valor',
+        '"Nombre exacto del KPI",2024-01-01,0',
+        '"Nombre exacto del KPI",2024-04-01,0',
+        '"Nombre exacto del KPI",2024-07-01,0',
+        '"Nombre exacto del KPI",2024-10-01,0',
+      ],
+    };
+    const content = (examples[tipo] || examples.histograma).join('\n');
+    download(`plantilla_kpis_${tipo}_${projId}.csv`, content, 'text/csv');
   });

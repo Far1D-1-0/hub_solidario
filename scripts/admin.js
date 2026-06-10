@@ -9,17 +9,26 @@
     // Tab switching
     const tabDash    = document.getElementById('tab-dashboard');
     const tabSol     = document.getElementById('tab-solicitudes');
+    const tabLid     = document.getElementById('tab-lideres');
     const panelDash  = document.getElementById('dashboard-panel');
     const panelSol   = document.getElementById('solicitudes-panel');
+    const panelLid   = document.getElementById('lideres-panel');
 
-    tabDash.addEventListener('click', () => {
-      tabDash.classList.add('active'); tabSol.classList.remove('active');
-      panelDash.style.display = 'block'; panelSol.style.display = 'none';
-    });
+    function showPanel(active) {
+      [tabDash, tabSol, tabLid].forEach(t => t.classList.remove('active'));
+      [panelDash, panelSol, panelLid].forEach(p => p.style.display = 'none');
+      active.tab.classList.add('active');
+      active.panel.style.display = 'block';
+    }
+
+    tabDash.addEventListener('click', () => showPanel({ tab: tabDash, panel: panelDash }));
     tabSol.addEventListener('click', () => {
-      tabSol.classList.add('active'); tabDash.classList.remove('active');
-      panelSol.style.display = 'block'; panelDash.style.display = 'none';
+      showPanel({ tab: tabSol, panel: panelSol });
       loadSolicitudes();
+    });
+    tabLid.addEventListener('click', () => {
+      showPanel({ tab: tabLid, panel: panelLid });
+      loadLideres();
     });
 
     // Volver al inicio sin cerrar sesión
@@ -94,6 +103,70 @@
               solicitudesLoaded = false;
               await loadStats();
             } catch { alert('Error de conexión'); }
+          });
+        });
+      } catch (err) {
+        list.innerHTML = `<p style="color:#EF4444;text-align:center;padding:16px 0">Error: ${err.message}</p>`;
+      }
+    }
+
+    // ── Render líderes panel ─────────────────────────────────────
+    let lideresLoaded = false;
+
+    async function loadLideres() {
+      if (lideresLoaded) return;
+      lideresLoaded = true;
+
+      const list = document.getElementById('lider-list');
+      list.innerHTML = '<p style="color:#64748B;text-align:center;padding:16px 0">Cargando líderes...</p>';
+
+      try {
+        const res  = await fetch('controllers/admin/list-leaders.php');
+        const json = await res.json();
+        if (!json.ok) throw new Error(json.error);
+
+        const lideres = json.data;
+        if (!lideres.length) {
+          list.innerHTML = '<p style="color:#9CA3AF;text-align:center;padding:24px 0">No hay líderes sociales registrados.</p>';
+          return;
+        }
+
+        list.innerHTML = lideres.map(u => `
+          <div class="sol-item" data-id="${u.id}">
+            <div class="sol-info">
+              <div class="sol-name">${u.nombre}</div>
+              <div class="sol-meta">${u.email}</div>
+            </div>
+            <button class="lider-downgrade" data-id="${u.id}" data-nombre="${u.nombre}">
+              Quitar rol
+            </button>
+          </div>`).join('');
+
+        list.querySelectorAll('.lider-downgrade').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const id     = parseInt(btn.dataset.id, 10);
+            const nombre = btn.dataset.nombre;
+            if (!confirm(`¿Quitar el rol de Líder Social a "${nombre}"?\nEl usuario pasará a ser Usuario Normal.`)) return;
+
+            btn.disabled = true;
+            btn.textContent = 'Procesando…';
+
+            try {
+              const r = await fetch('controllers/admin/downgrade-role.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id }),
+              });
+              const j = await r.json();
+              if (!j.ok) { alert(j.error || 'Error al procesar'); btn.disabled = false; btn.textContent = 'Quitar rol'; return; }
+
+              const item = list.querySelector(`.sol-item[data-id="${id}"]`);
+              if (item) item.remove();
+              if (!list.querySelector('.sol-item')) {
+                list.innerHTML = '<p style="color:#9CA3AF;text-align:center;padding:24px 0">No hay líderes sociales registrados.</p>';
+              }
+              lideresLoaded = false;
+            } catch { alert('Error de conexión'); btn.disabled = false; btn.textContent = 'Quitar rol'; }
           });
         });
       } catch (err) {

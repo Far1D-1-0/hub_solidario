@@ -77,6 +77,10 @@
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
           CSV
         </button>
+        <button class="u-tab" data-fmt="kpi">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          KPIs
+        </button>
       </div>
 
       <!-- JSON panel -->
@@ -123,6 +127,80 @@
           <button class="u-btn-template" id="btn-dl-csv">
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Descargar Plantilla CSV
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI file upload panel -->
+      <div class="u-import-card" id="panel-kpi" style="display:none">
+        <h3>Importar datos de KPIs desde archivo</h3>
+        <p class="u-ic-sub">Sube un CSV o JSON con columnas <strong>kpi_nombre, fecha, valor</strong>. Especifica el tipo de gráfica para visualizar los datos en el dashboard de impacto.</p>
+
+        <!-- Tipo de gráfica -->
+        <div class="u-tipo-label">Tipo de gráfica <span style="color:#EF4444">*</span></div>
+        <div class="u-tipo-options" id="tipo-grafica-options">
+          <button type="button" class="u-tipo-btn active" data-tipo="histograma">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            Histograma
+          </button>
+          <button type="button" class="u-tipo-btn" data-tipo="puntos">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2"/><circle cx="12" cy="10" r="2"/><circle cx="18" cy="14" r="2"/><circle cx="9" cy="6" r="2"/></svg>
+            Gráfica de puntos
+          </button>
+          <button type="button" class="u-tipo-btn" data-tipo="pie">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 118 2.83"/><path d="M22 12A10 10 0 0012 2v10z"/></svg>
+            Pie chart
+          </button>
+        </div>
+
+        <!-- CSV example that changes per type -->
+        <div class="u-tipo-hint" id="tipo-hint-histograma">
+          <div style="font-size:.75rem;font-weight:700;color:#374151;margin-bottom:6px">Formato CSV — Histograma (barras por período):</div>
+          <div class="u-csv-hint">
+            <span class="csv-header">kpi_nombre,fecha,valor</span><br>
+            Beneficiarios directos,2024-01-01,850<br>
+            Beneficiarios directos,2024-02-01,920<br>
+            Beneficiarios directos,2024-03-01,1100
+          </div>
+        </div>
+        <div class="u-tipo-hint" id="tipo-hint-puntos" style="display:none">
+          <div style="font-size:.75rem;font-weight:700;color:#374151;margin-bottom:6px">Formato CSV — Gráfica de puntos (mediciones individuales):</div>
+          <div class="u-csv-hint">
+            <span class="csv-header">kpi_nombre,fecha,valor</span><br>
+            Asistencia diaria,2024-03-04,45<br>
+            Asistencia diaria,2024-03-11,52<br>
+            Asistencia diaria,2024-03-18,48<br>
+            Asistencia diaria,2024-03-25,60
+          </div>
+        </div>
+        <div class="u-tipo-hint" id="tipo-hint-pie" style="display:none">
+          <div style="font-size:.75rem;font-weight:700;color:#374151;margin-bottom:6px">Formato CSV — Pie chart (distribución por segmento):</div>
+          <div class="u-csv-hint">
+            <span class="csv-header">kpi_nombre,fecha,valor</span><br>
+            Distribución regional,2024-Q1,30<br>
+            Distribución regional,2024-Q2,25<br>
+            Distribución regional,2024-Q3,45
+          </div>
+        </div>
+
+        <div class="kpi-file-zone" id="kpi-file-zone" style="margin-top:14px">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span id="kpi-file-name">Haz clic para seleccionar un archivo .csv o .json</span>
+        </div>
+        <input type="file" id="kpi-file-input" accept=".csv,.json" style="display:none"/>
+        <p class="u-error-msg" id="kpi-error">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span id="kpi-error-text"></span>
+        </p>
+        <div id="kpi-result" style="display:none;background:#F0FDF4;border-radius:10px;padding:12px 16px;font-size:.82rem;color:#374151;margin-top:10px"></div>
+        <div class="u-import-actions">
+          <button class="u-btn-import" id="btn-upload-kpi">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Subir e importar al servidor
+          </button>
+          <button class="u-btn-template" id="btn-dl-kpi-csv">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Descargar plantilla CSV
           </button>
         </div>
       </div>

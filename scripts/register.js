@@ -15,11 +15,7 @@
       if (msg) err.textContent = msg;
     }
 
-    const ROL_MAP = {
-      'Administrador': 'ADMIN',
-      'Líder Social':  'LIDER',
-      'Usuario':       'USUARIO',
-    };
+    const ROL_NOMBRE = { ADMIN: 'Administrador', LIDER: 'Líder Social', USUARIO: 'Usuario' };
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -27,11 +23,11 @@
       e.preventDefault();
       let valid = true;
 
-      const nombre  = document.getElementById('reg-nombre').value.trim();
-      const email   = document.getElementById('reg-email').value.trim();
-      const pass    = document.getElementById('reg-pass').value;
-      const confirm = document.getElementById('reg-confirm').value;
-      const rol     = document.getElementById('reg-rol').value;
+      const nombre    = document.getElementById('reg-nombre').value.trim();
+      const email     = document.getElementById('reg-email').value.trim();
+      const pass      = document.getElementById('reg-pass').value;
+      const confirm   = document.getElementById('reg-confirm').value;
+      const rol       = document.getElementById('reg-rol').value; // now the option value IS the code
 
       if (!nombre) {
         setError('field-nombre', 'err-nombre', true, 'Por favor ingresa tu nombre completo');
@@ -62,7 +58,8 @@
         valid = false;
       } else { setError('field-confirm', 'err-confirm', false); }
 
-      if (!rol) {
+      const VALID_ROLES = ['ADMIN', 'LIDER', 'USUARIO'];
+      if (!rol || !VALID_ROLES.includes(rol)) {
         setError('field-rol', 'err-rol', true, 'Por favor selecciona un rol');
         valid = false;
       } else { setError('field-rol', 'err-rol', false); }
@@ -80,8 +77,8 @@
             nombre,
             email,
             contrasena: pass,
-            rol_codigo: ROL_MAP[rol] ?? 'USUARIO',
-            rol_nombre: rol,
+            rol_codigo: rol,
+            rol_nombre: ROL_NOMBRE[rol] ?? rol,
           }),
         });
         const json = await res.json();

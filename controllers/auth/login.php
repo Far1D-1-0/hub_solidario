@@ -41,6 +41,12 @@ if (!$row || !password_verify($contrasena, $row['contrasena'])) {
 if ($row['estado_cuenta'] !== 'ACTIVA') {
     json_err('Esta cuenta ha sido desactivada', 403);
 }
+if ($row['estado_validacion'] === 'PENDIENTE') {
+    json_err('Tu cuenta está pendiente de validación por un administrador. Recibirás acceso una vez que sea aprobada.', 403);
+}
+if ($row['estado_validacion'] === 'RECHAZADO') {
+    json_err('Tu solicitud de cuenta fue rechazada. Contacta al administrador para más información.', 403);
+}
 
 $user = [
     'id'                => (int) $row['id_usuario'],

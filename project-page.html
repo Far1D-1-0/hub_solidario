@@ -88,8 +88,15 @@
       <div class="pp-panel-section">
         <h3>Secciones visibles</h3>
         <div class="widget-toggle-list" id="widget-toggle-list">
-          <!-- filled by JS -->
+          <!-- filled by JS (static widgets) -->
         </div>
+
+        <!-- Project sections toggle (filled by JS after sections load) -->
+        <div id="pp-sec-toggles-wrap" style="display:none">
+          <p style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94A3B8;margin:14px 0 8px 2px">Secciones del proyecto</p>
+          <div class="widget-toggle-list" id="pp-sec-toggle-list"></div>
+        </div>
+
         <div class="drag-hint">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px"><circle cx="9" cy="5" r="1" fill="currentColor"/><circle cx="9" cy="12" r="1" fill="currentColor"/><circle cx="9" cy="19" r="1" fill="currentColor"/><circle cx="15" cy="5" r="1" fill="currentColor"/><circle cx="15" cy="12" r="1" fill="currentColor"/><circle cx="15" cy="19" r="1" fill="currentColor"/></svg>
           <span>Arrastra las secciones en la página para reordenarlas mientras el modo edición está activo.</span>
@@ -101,6 +108,223 @@
       <button class="btn-cancel-settings" id="btn-cancel-settings">Cancelar</button>
     </div>
   </aside>
+
+  <!-- Nav panel trigger (right edge, all users) -->
+  <button id="pp-nav-trigger" class="pp-nav-trigger" title="Índice de navegación" aria-label="Abrir índice">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+    <span>Índice</span>
+  </button>
+  <div id="pp-nav-overlay" class="pp-nav-overlay"></div>
+  <aside id="pp-nav-panel" class="pp-nav-panel" role="dialog" aria-label="Índice de navegación">
+    <div class="tools-panel-head">
+      <div class="tools-panel-title">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+        Índice del Proyecto
+      </div>
+      <button class="tools-panel-close" id="pp-nav-panel-close" aria-label="Cerrar">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="tools-panel-body" id="pp-nav-panel-body">
+      <div class="tools-tree-loading">Cargando…</div>
+    </div>
+  </aside>
+
+  <!-- Tools panel trigger (floating, right side, leaders only) -->
+  <button id="tools-trigger" class="tools-trigger" title="Herramientas del proyecto" aria-label="Abrir herramientas">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+    <span>Herramientas</span>
+  </button>
+
+  <!-- Tools panel overlay -->
+  <div id="tools-overlay" class="tools-overlay"></div>
+
+  <!-- Tools panel -->
+  <aside id="tools-panel" class="tools-panel" role="dialog" aria-label="Herramientas del proyecto">
+    <div class="tools-panel-head">
+      <div class="tools-panel-title">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+        Herramientas
+      </div>
+      <button class="tools-panel-close" id="tools-panel-close" aria-label="Cerrar">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="tools-panel-body">
+
+      <!-- Project config actions -->
+      <div class="tools-panel-sep">Configuración del proyecto</div>
+
+      <!-- Action: Cargar datos -->
+      <a class="tools-action" id="btn-upload-data" href="#" style="text-decoration:none">
+        <div class="tools-action-icon" style="background:#F0FDF4;color:#16A34A">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <div class="tools-action-info">
+          <strong>Cargar datos</strong>
+          <span>Sube archivos e información del proyecto</span>
+        </div>
+        <svg class="tools-action-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+
+      <!-- Action: Editar info -->
+      <button class="tools-action" id="btn-edit-info">
+        <div class="tools-action-icon" style="background:#EFF6FF;color:#3B82F6">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </div>
+        <div class="tools-action-info">
+          <strong>Editar información</strong>
+          <span>Nombre, descripción, objetivos y más</span>
+        </div>
+        <svg class="tools-action-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <!-- Action: Personalizar -->
+      <button class="tools-action" id="btn-open-panel">
+        <div class="tools-action-icon" style="background:#FDF4FF;color:#A21CAF">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        </div>
+        <div class="tools-action-info">
+          <strong>Personalizar diseño</strong>
+          <span>Paleta de colores y secciones visibles</span>
+        </div>
+        <svg class="tools-action-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <div class="tools-panel-sep">Estructura del proyecto</div>
+
+      <!-- Action: Añadir Sección -->
+      <button class="tools-action" id="tools-btn-section">
+        <div class="tools-action-icon" style="background:#EFF6FF;color:#3B82F6">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        </div>
+        <div class="tools-action-info">
+          <strong>Añadir Sección</strong>
+          <span>Organiza el contenido en grupos</span>
+        </div>
+        <svg class="tools-action-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <!-- Action: Añadir Página -->
+      <button class="tools-action" id="tools-btn-page">
+        <div class="tools-action-icon" style="background:#F0FDF4;color:#16A34A">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        </div>
+        <div class="tools-action-info">
+          <strong>Añadir Página</strong>
+          <span>Crea páginas dentro de una sección</span>
+        </div>
+        <svg class="tools-action-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <!-- Action: Agregar Bloques -->
+      <div class="tools-action tools-action--info" id="tools-btn-blocks">
+        <div class="tools-action-icon" style="background:#F5F3FF;color:#7C3AED">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><path d="M17 13v8M13 17h8"/></svg>
+        </div>
+        <div class="tools-action-info">
+          <strong>Bloques de Contenido</strong>
+          <span>Haz clic en una página para editarla con bloques</span>
+        </div>
+        <svg class="tools-action-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+
+      <!-- Action: Árbol de Navegación -->
+      <button class="tools-action" id="tools-btn-tree">
+        <div class="tools-action-icon" style="background:#FFF7ED;color:#EA580C">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+        </div>
+        <div class="tools-action-info">
+          <strong>Árbol de Navegación</strong>
+          <span>Visualiza la estructura del proyecto</span>
+        </div>
+        <svg class="tools-action-arrow" id="tree-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <!-- Nav tree inline -->
+      <div id="tools-nav-tree" class="tools-nav-tree" style="display:none">
+        <div id="tools-tree-content" class="tools-tree-content">
+          <div class="tools-tree-loading">Cargando estructura…</div>
+        </div>
+      </div>
+
+    </div><!-- /tools-panel-body -->
+  </aside>
+
+  <!-- Modal: Añadir Sección -->
+  <div id="sec-modal-overlay" class="tools-modal-overlay" style="display:none">
+    <div class="tools-modal">
+      <div class="tools-modal-head">
+        <h3>Nueva Sección</h3>
+        <button class="tools-modal-close" id="sec-modal-close">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="tools-modal-body">
+        <div class="tools-field">
+          <label class="tools-label">Nombre de la sección *</label>
+          <input id="sec-nombre" class="tools-input" type="text" placeholder="Ej. Programas, Impacto, Equipo…" maxlength="255"/>
+        </div>
+        <div class="tools-field">
+          <label class="tools-label">Sección padre <span class="tools-optional">(opcional)</span></label>
+          <select id="sec-padre" class="tools-select">
+            <option value="">— Ninguna (sección raíz) —</option>
+          </select>
+        </div>
+        <p id="sec-msg" class="tools-msg" style="display:none"></p>
+      </div>
+      <div class="tools-modal-foot">
+        <button class="tools-btn-cancel" id="sec-cancel">Cancelar</button>
+        <button class="tools-btn-save" id="sec-save">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Crear sección
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Añadir Página -->
+  <div id="page-modal-overlay" class="tools-modal-overlay" style="display:none">
+    <div class="tools-modal">
+      <div class="tools-modal-head">
+        <h3>Nueva Página</h3>
+        <button class="tools-modal-close" id="page-modal-close">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="tools-modal-body">
+        <div class="tools-field">
+          <label class="tools-label">Título de la página *</label>
+          <input id="page-titulo" class="tools-input" type="text" placeholder="Ej. Inicio, Quiénes somos, Resultados…" maxlength="255"/>
+        </div>
+        <div class="tools-field">
+          <label class="tools-label">Sección *</label>
+          <select id="page-seccion" class="tools-select">
+            <option value="">— Selecciona una sección —</option>
+          </select>
+        </div>
+        <div class="tools-field">
+          <label class="tools-label">Tipo de página</label>
+          <select id="page-tipo" class="tools-select">
+            <option value="CONTENIDO">Contenido — página con bloques editables</option>
+            <option value="HOME">Home — página principal de la sección</option>
+            <option value="LISTADO">Listado — colección de elementos</option>
+            <option value="DETALLE">Detalle — información de un elemento</option>
+            <option value="ARTICULO">Artículo — entrada editorial</option>
+          </select>
+        </div>
+        <p id="page-msg" class="tools-msg" style="display:none"></p>
+      </div>
+      <div class="tools-modal-foot">
+        <button class="tools-btn-cancel" id="page-cancel">Cancelar</button>
+        <button class="tools-btn-save" id="page-save">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Crear página
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Page content -->
   <main class="pp-wrap" id="pp-main">
@@ -176,20 +400,8 @@
       <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
       <div class="lbar-text">
         <strong>Eres el líder de este proyecto</strong>
-        Personaliza el diseño y las secciones de tu página
+        Usa la barra de herramientas para editar y personalizar
       </div>
-      <a class="btn-customize" id="btn-upload-data" href="#" style="text-decoration:none">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Cargar datos
-      </a>
-      <button class="btn-customize" id="btn-edit-info">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        Editar info
-      </button>
-      <button class="btn-customize" id="btn-open-panel">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-        Personalizar
-      </button>
     </div>
 
     <!-- Widgets -->
@@ -232,26 +444,23 @@
 
       <!-- Widget: Dashboard -->
       <div class="pp-widget" data-widget-id="dashboard" draggable="false">
-        <div class="pp-section-title">Dashboard de Impacto</div>
-        <div class="pp-dash-body">
-          <div class="pp-stat-cards" id="dash-stats"></div>
-          <div class="pp-charts-row">
-            <div class="pp-chart-box">
-              <h4>Evolución de beneficiarios</h4>
-              <canvas id="chart-beneficiaries"></canvas>
-            </div>
-            <div class="pp-chart-box">
-              <h4>Actividades realizadas</h4>
-              <canvas id="chart-activities"></canvas>
-            </div>
+        <div class="pp-section-title pp-section-title--row">
+          <span>Dashboard de Impacto</span>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="pp-widget-action-btn" id="btn-add-kpi" style="display:none" title="Añadir KPI">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              Añadir KPI
+            </button>
+            <button class="pp-widget-action-btn" id="btn-add-chart" style="display:none" title="Agregar gráfica al dashboard">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              Agregar gráfica
+            </button>
           </div>
         </div>
-      </div>
-
-      <!-- Widget: Progress -->
-      <div class="pp-widget" data-widget-id="progress" draggable="false">
-        <div class="pp-section-title">Progreso del proyecto</div>
-        <div class="pp-prog-body" id="prog-body"></div>
+        <div class="pp-dash-body">
+          <div class="pp-stat-cards" id="dash-stats"></div>
+          <div id="pp-charts-dynamic" class="pp-charts-row"></div>
+        </div>
       </div>
 
       <!-- Widget: Content -->
@@ -267,6 +476,9 @@
       </div>
 
     </div><!-- /pp-widgets -->
+
+    <div id="pp-sections-wrap"></div>
+
   </main>
 
   <!-- Edit info modal -->
@@ -334,7 +546,49 @@
     </div>
   </div>
 
-  <script src="scripts/session.js"></script>
+  <!-- Modal: Añadir KPI -->
+  <div id="kpi-modal-overlay" class="tools-modal-overlay" style="display:none">
+    <div class="tools-modal">
+      <div class="tools-modal-head">
+        <h3>Nuevo KPI</h3>
+        <button class="tools-modal-close" id="kpi-modal-close">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="tools-modal-body">
+        <div class="tools-field">
+          <label class="tools-label">Nombre del indicador *</label>
+          <input id="kpi-nombre" class="tools-input" type="text" placeholder="Ej. Beneficiarios directos, Talleres impartidos…" maxlength="255"/>
+        </div>
+        <div class="tools-field">
+          <label class="tools-label">Descripción <span class="tools-optional">(opcional)</span></label>
+          <textarea id="kpi-desc" class="tools-input" rows="2" placeholder="Breve explicación de qué mide este indicador…" style="resize:vertical"></textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="tools-field">
+            <label class="tools-label">Meta *</label>
+            <input id="kpi-meta" class="tools-input" type="number" min="0.01" step="any" placeholder="Ej. 1500"/>
+          </div>
+          <div class="tools-field">
+            <label class="tools-label">Unidad de medida</label>
+            <select id="kpi-unidad" class="tools-select">
+              <option value="">— Sin unidad —</option>
+            </select>
+          </div>
+        </div>
+        <p id="kpi-modal-msg" class="tools-msg" style="display:none"></p>
+      </div>
+      <div class="tools-modal-foot">
+        <button class="tools-btn-cancel" id="kpi-modal-cancel">Cancelar</button>
+        <button class="tools-btn-save" id="kpi-modal-save">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Crear KPI
+        </button>
+      </div>
+    </div>
+  </div>
+
+<script src="scripts/session.js"></script>
   <script src="scripts/main.js"></script>
   <script src="scripts/project-page.js"></script>
 </body>

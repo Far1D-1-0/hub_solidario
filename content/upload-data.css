@@ -302,3 +302,57 @@
     .u-preview-pub span { color: #9CA3AF; font-size: .73rem; }
 
     @media (max-width: 600px) { .u-preview-grid { grid-template-columns: repeat(2,1fr); } }
+
+    /* KPI file zone */
+    .kpi-file-zone {
+      border: 2px dashed #CBD5E1;
+      border-radius: 12px;
+      padding: 22px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      background: #F8FAFC;
+      color: #64748B;
+      font-size: .85rem;
+    }
+    .kpi-file-zone:hover { border-color: #F05A28; background: #FFF7ED; }
+    .kpi-file-zone svg   { flex-shrink: 0; color: #94A3B8; }
+
+    /* ── Tipo de gráfica selector ── */
+    .u-tipo-label {
+      font-size: .8rem;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+    .u-tipo-options {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .u-tipo-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: 1.5px solid #E5E7EB;
+      background: white;
+      color: #6B7280;
+      font-size: .8rem;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .u-tipo-btn.active {
+      border-color: #1A56E8;
+      background: #EFF6FF;
+      color: #1A56E8;
+      font-weight: 700;
+    }
+    .u-tipo-btn:hover:not(.active) { background: #F9FAFB; border-color: #D1D5DB; }
+    .u-tipo-hint { margin-bottom: 0; }

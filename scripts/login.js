@@ -1,3 +1,19 @@
+    // Show banner based on URL param (?pendiente=1 or ?rechazado=1)
+    (function () {
+      const params  = new URLSearchParams(window.location.search);
+      const banner  = document.getElementById('pending-banner');
+      const msg     = document.getElementById('pending-banner-msg');
+      if (params.get('pendiente')) {
+        banner.classList.add('is-warning');
+        msg.textContent = 'Tu solicitud está pendiente de aprobación por un administrador. Podrás iniciar sesión una vez que sea aprobada.';
+        banner.style.display = 'flex';
+      } else if (params.get('rechazado')) {
+        banner.classList.add('is-error');
+        msg.textContent = 'Tu solicitud fue rechazada. Contacta al administrador para más información.';
+        banner.style.display = 'flex';
+      }
+    })();
+
     document.querySelectorAll('.eye-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const input = btn.closest('.field-wrap')?.querySelector('input');

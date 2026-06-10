@@ -40,21 +40,6 @@
       width: 100%; border-radius: 10px; margin-bottom: 14px;
       max-height: 280px; object-fit: cover; display: block;
     }
-    .feed-actions {
-      display: flex;
-      gap: 4px;
-      padding-top: 10px;
-      border-top: 1px solid #F3F4F6;
-    }
-    .feed-btn {
-      display: flex; align-items: center; gap: 6px;
-      background: none; border: none; cursor: pointer;
-      font-size: .83rem; color: #6B7280; padding: 6px 10px;
-      border-radius: 8px; transition: background .15s, color .15s;
-      font-family: inherit;
-    }
-    .feed-btn:hover { background: #F3F4F6; color: #374151; }
-
     /* Sidebar */
     .sidebar-card {
       background: white;

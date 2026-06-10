@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Página - Proyectos Solidarios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="content/styles.css"/>
+  <link rel="stylesheet" href="content/page-view.css"/>
+</head>
+<body class="pv-body">
+
+  <!-- Main hamburger nav (same as project-page) -->
+  <button id="menu-btn" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+  <div id="nav-overlay"></div>
+  <nav id="side-nav" aria-label="Menú principal">
+    <div id="nav-logo">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="rgba(255,255,255,.2)"/><path d="M8 20 L16 10 L24 20" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 20 L16 14 L20 20" fill="white"/></svg>
+      <div class="logo-text"><strong>Proyectos</strong><span>Solidarios</span></div>
+    </div>
+    <h3>Menú de Navegación</h3>
+    <ul class="nav-links">
+      <li><a href="index.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg><div class="link-info"><strong>Inicio</strong><span>Página principal</span></div></a></li>
+      <li><a href="feed.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 11h16M4 6h16M4 16h10"/></svg><div class="link-info"><strong>Feed</strong><span>Actividades recientes</span></div></a></li>
+      <li><a href="catalog.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><div class="link-info"><strong>Catálogo</strong><span>Todos los proyectos</span></div></a></li>
+      <li><a href="events.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><div class="link-info"><strong>Eventos</strong><span>Calendario de actividades</span></div></a></li>
+      <li id="nav-my-project-link" style="display:none"><a href="#"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg><div class="link-info"><strong>Mi Proyecto</strong><span>Ver tu iniciativa</span></div></a></li>
+      <li><a href="login.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="link-info"><strong>Perfil</strong><span>Gestiona tu cuenta</span></div></a></li>
+      <li id="nav-admin-link" style="display:none"><a href="admin.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="link-info"><strong>Admin</strong><span>Panel de control</span></div></a></li>
+    </ul>
+    <div id="user-panel" class="nav-user-panel">
+      <div class="nav-user-avatar" id="nav-avatar">U</div>
+      <div class="nav-user-info"><strong id="nav-username">Usuario</strong><span>En línea</span></div>
+      <button class="nav-logout-btn" id="nav-logout" title="Cerrar sesión">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Nav trigger (all users, always visible) -->
+  <button id="pv-nav-trigger" class="pv-nav-trigger" title="Índice de navegación" aria-label="Abrir índice">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+    <span>Índice</span>
+  </button>
+  <div id="pv-nav-overlay" class="pv-panel-overlay"></div>
+  <aside id="pv-nav-panel" class="pv-nav-panel" role="dialog" aria-label="Índice de navegación">
+    <div class="tools-panel-head">
+      <div class="tools-panel-title">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+        <span id="pv-nav-proj-name">Cargando…</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <button id="pv-nav-back" class="pv-nav-back-btn" title="Volver al proyecto">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Proyecto
+        </button>
+        <button class="tools-panel-close" id="pv-nav-panel-close" aria-label="Cerrar">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="tools-panel-body pv-nav-tree-wrap">
+      <div id="pv-nav-tree">
+        <div class="pv-nav-loading">Cargando…</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Tools trigger (leaders only) -->
+  <button id="tools-trigger" class="tools-trigger pv-tools-trigger" title="Herramientas" aria-label="Abrir herramientas">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+    <span>Editar</span>
+  </button>
+  <div id="tools-overlay" class="tools-overlay"></div>
+
+  <!-- Tools panel -->
+  <aside id="tools-panel" class="tools-panel pv-tools-panel" role="dialog" aria-label="Editor de página">
+    <div class="tools-panel-head">
+      <div class="tools-panel-title">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+        Editor de página
+      </div>
+      <button class="tools-panel-close" id="tools-panel-close" aria-label="Cerrar">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="tools-panel-body" id="tools-panel-body">
+
+      <!-- Estado -->
+      <div class="pv-tools-section">
+        <div class="pv-tools-section-label">Estado de la página</div>
+        <div class="pv-estado-btns" id="estado-btns">
+          <button class="pv-estado-btn" data-estado="BORRADOR">Borrador</button>
+          <button class="pv-estado-btn" data-estado="PUBLICADA">Publicada</button>
+          <button class="pv-estado-btn" data-estado="ARCHIVADA">Archivada</button>
+        </div>
+        <p class="pv-estado-msg" id="estado-msg" style="display:none"></p>
+      </div>
+
+      <!-- Bloques disponibles -->
+      <div class="pv-tools-section">
+        <div class="pv-tools-section-label">
+          Agregar bloques
+          <span class="pv-tools-hint">Arrastra o haz clic para añadir</span>
+        </div>
+        <div class="pv-block-palette" id="block-palette">
+          <!-- filled by JS -->
+        </div>
+      </div>
+
+      <!-- Bloques en la página -->
+      <div class="pv-tools-section" id="pv-blocks-list-section">
+        <div class="pv-tools-section-label">Bloques en esta página</div>
+        <div class="pv-blocks-list" id="pv-blocks-list">
+          <div class="pv-blocks-list-empty">Esta página aún no tiene bloques.</div>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- Page main content -->
+  <main class="pv-main" id="pv-main">
+      <!-- Breadcrumb -->
+      <div class="pv-breadcrumb" id="pv-breadcrumb">
+        <span class="pv-bc-back" id="pv-bc-back">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Proyecto
+        </span>
+        <span class="pv-bc-sep">/</span>
+        <span id="pv-bc-section"></span>
+        <span class="pv-bc-sep">/</span>
+        <span id="pv-bc-page"></span>
+      </div>
+
+      <!-- Page header -->
+      <div class="pv-page-header" id="pv-page-header">
+        <div class="pv-page-meta">
+          <span class="pv-estado-badge" id="pv-estado-badge">Borrador</span>
+          <span class="pv-tipo-badge" id="pv-tipo-badge">Contenido</span>
+        </div>
+        <h1 class="pv-page-title" id="pv-page-title">Cargando…</h1>
+      </div>
+
+      <!-- Blocks drop zone -->
+      <div class="pv-blocks-zone" id="pv-blocks-zone">
+        <!-- blocks rendered here -->
+      </div>
+
+      <!-- Empty state (shown when no blocks and isLeader) -->
+      <div class="pv-empty-hint" id="pv-empty-hint" style="display:none">
+        <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><path d="M17 13v8M13 17h8"/></svg>
+        <p>Esta página no tiene contenido aún.</p>
+        <p class="pv-empty-sub">Abre el panel <strong>Editar</strong> y arrastra bloques para comenzar.</p>
+      </div>
+  </main>
+
+  <!-- Edit block modal -->
+  <div id="block-edit-overlay" class="pv-modal-overlay" style="display:none">
+    <div class="pv-modal" id="block-edit-modal">
+      <div class="pv-modal-head">
+        <h3 id="block-edit-title">Editar bloque</h3>
+        <button class="pv-modal-close" id="block-edit-close">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="pv-modal-body" id="block-edit-body">
+        <!-- filled dynamically -->
+      </div>
+      <div class="pv-modal-foot">
+        <button class="pv-modal-btn-cancel" id="block-edit-cancel">Cancelar</button>
+        <button class="pv-modal-btn-save" id="block-edit-save">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/session.js"></script>
+  <script src="scripts/main.js"></script>
+  <script src="scripts/page-view.js"></script>
+</body>
+</html>

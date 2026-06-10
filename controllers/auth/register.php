@@ -50,6 +50,12 @@ $ins = $pdo->prepare('
 $ins->execute([$nombre, $email, $hash, $id_rol, $id_val, $id_cuenta]);
 $id_usuario = (int) $pdo->lastInsertId();
 
+// Líderes necesitan un directorio propio para sus archivos
+if ($rol_codigo === 'LIDER') {
+    $dir = __DIR__ . '/../../archivos_usuario/' . $id_usuario;
+    if (!is_dir($dir)) mkdir($dir, 0755, true);
+}
+
 $user = [
     'id'                => $id_usuario,
     'nombre'            => $nombre,

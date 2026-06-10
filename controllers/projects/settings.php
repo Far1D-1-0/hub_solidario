@@ -8,6 +8,7 @@ $defaults = [
     'palette'       => 'default',
     'widgetOrder'   => ['description','dashboard','progress','content','publications'],
     'hiddenWidgets' => [],
+    'charts'        => [],
 ];
 
 $method = $_SERVER['REQUEST_METHOD'] ?? '';
@@ -48,6 +49,7 @@ if ($method === 'POST') {
         'palette'       => $b['palette']       ?? $defaults['palette'],
         'widgetOrder'   => $b['widgetOrder']    ?? $defaults['widgetOrder'],
         'hiddenWidgets' => $b['hiddenWidgets']  ?? [],
+        'charts'        => $b['charts']         ?? [],
     ];
 
     $pdo->prepare('UPDATE Proyecto SET configuracion = ? WHERE id_proyecto = ?')

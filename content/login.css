@@ -1,3 +1,26 @@
+    .pending-banner {
+      max-width: 420px;
+      margin: 20px auto 0;
+      padding: 14px 18px;
+      border-radius: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .875rem;
+      line-height: 1.45;
+    }
+    .pending-banner.is-warning {
+      background: #FFF7ED;
+      border: 1.5px solid #FED7AA;
+      color: #92400E;
+    }
+    .pending-banner.is-error {
+      background: #FEF2F2;
+      border: 1.5px solid #FECACA;
+      color: #991B1B;
+    }
+    .pending-banner svg { flex-shrink: 0; margin-top: 1px; }
+
     /* Password field – pink/purple border */
     #login-pass {
       border: 1.5px solid #C680E8 !important;

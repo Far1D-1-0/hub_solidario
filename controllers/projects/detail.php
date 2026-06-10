@@ -25,6 +25,7 @@ $stmt = $pdo->prepare('
         p.porcentaje_completacion AS completacion,
         p.fecha_creacion,
         p.datos_importados,
+        p.configuracion,
         p.id_categoria,
         c.nombre              AS categoria_nombre,
         c.color               AS categoria_color,
@@ -52,6 +53,9 @@ if (!$project) json_err('Proyecto no encontrado', 404);
 $project['objetivos']        = json_decode($project['objetivos']        ?? '[]',   true) ?? [];
 $project['operacion']        = json_decode($project['operacion']        ?? '[]',   true) ?? [];
 $project['datos_importados'] = json_decode($project['datos_importados'] ?? 'null', true) ?? (object)[];
+$proj_config                 = json_decode($project['configuracion']    ?? 'null', true) ?? [];
+$project['charts_config']    = $proj_config['charts'] ?? [];
+unset($project['configuracion']);
 
 // KPIs con último resultado
 $kpis = $pdo->prepare('
@@ -65,7 +69,13 @@ $kpis = $pdo->prepare('
         um.simbolo AS unidad_simbolo,
         ek.codigo  AS estado,
         r.valor    AS valor_actual,
-        r.fecha_resultado AS fecha_ultimo_resultado
+        r.fecha_resultado AS fecha_ultimo_resultado,
+        (SELECT au.tipo_grafica
+         FROM ResultadoKPI r2
+         JOIN ArchivoUsuario au ON au.id_archivo_usuario = r2.id_archivo_usuario
+         WHERE r2.id_kpi = k.id_kpi AND au.tipo_grafica IS NOT NULL
+         ORDER BY r2.fecha_resultado DESC
+         LIMIT 1) AS tipo_grafica
     FROM KPI k
     LEFT JOIN UnidadMedida um  ON um.id_unidad_medida = k.id_unidad_medida
     LEFT JOIN EstadoKPI ek     ON ek.id_estado_kpi    = k.id_estado_kpi
