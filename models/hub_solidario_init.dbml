@@ -1,0 +1,559 @@
+Project HubSolidario {
+  database_type: 'MySQL'
+  Note: 'Generated from models/hub_solidario_init.sql. Database: hub_solidario. Engine: InnoDB. Charset: utf8mb4. Collation: utf8mb4_unicode_ci.'
+}
+
+Enum TipoGrafica {
+  histograma
+  puntos
+  pie
+}
+
+Table Rol {
+  id_rol int [pk, increment]
+  codigo varchar(100) [not null]
+  nombre varchar(100) [not null]
+  descripcion text
+
+  indexes {
+    codigo [unique, name: 'uq_rol_codigo']
+    nombre [unique, name: 'uq_rol_nombre']
+  }
+}
+
+Table EstadoValidacionUsuario {
+  id_estado_validacion_usuario int [pk, increment]
+  codigo varchar(100) [not null]
+  nombre varchar(100) [not null]
+  descripcion text
+
+  indexes {
+    codigo [unique, name: 'uq_estado_validacion_usuario_codigo']
+    nombre [unique, name: 'uq_estado_validacion_usuario_nombre']
+  }
+}
+
+Table EstadoCuentaUsuario {
+  id_estado_cuenta_usuario int [pk, increment]
+  codigo varchar(100) [not null]
+  nombre varchar(100) [not null]
+  descripcion text
+
+  indexes {
+    codigo [unique, name: 'uq_estado_cuenta_usuario_codigo']
+    nombre [unique, name: 'uq_estado_cuenta_usuario_nombre']
+  }
+}
+
+Table EstadoProyecto {
+  id_estado_proyecto int [pk, increment]
+  codigo varchar(100) [not null]
+  nombre varchar(100) [not null]
+  descripcion text
+
+  indexes {
+    codigo [unique, name: 'uq_estado_proyecto_codigo']
+    nombre [unique, name: 'uq_estado_proyecto_nombre']
+  }
+}
+
+Table EstadoPagina {
+  id_estado_pagina int [pk, increment]
+  codigo varchar(100) [not null]
+  nombre varchar(100) [not null]
+  descripcion text
+
+  indexes {
+    codigo [unique, name: 'uq_estado_pagina_codigo']
+    nombre [unique, name: 'uq_estado_pagina_nombre']
+  }
+}
+
+Table EstadoKPI {
+  id_estado_kpi int [pk, increment]
+  codigo varchar(100) [not null]
+  nombre varchar(100) [not null]
+  descripcion text
+
+  indexes {
+    codigo [unique, name: 'uq_estado_kpi_codigo']
+    nombre [unique, name: 'uq_estado_kpi_nombre']
+  }
+}
+
+Table EstadoPublicacion {
+  id_estado_publicacion int [pk, increment]
+  codigo varchar(100) [not null]
+  nombre varchar(100) [not null]
+  descripcion text
+
+  indexes {
+    codigo [unique, name: 'uq_estado_publicacion_codigo']
+    nombre [unique, name: 'uq_estado_publicacion_nombre']
+  }
+}
+
+Table EstadoEvento {
+  id_estado_evento int [pk, increment]
+  codigo varchar(100) [not null]
+  nombre varchar(100) [not null]
+  descripcion text
+
+  indexes {
+    codigo [unique, name: 'uq_estado_evento_codigo']
+    nombre [unique, name: 'uq_estado_evento_nombre']
+  }
+}
+
+Table EstadoTestimonio {
+  id_estado_testimonio int [pk, increment]
+  codigo varchar(100) [not null]
+  nombre varchar(100) [not null]
+  descripcion text
+
+  indexes {
+    codigo [unique, name: 'uq_estado_testimonio_codigo']
+    nombre [unique, name: 'uq_estado_testimonio_nombre']
+  }
+}
+
+Table TipoBloque {
+  id_tipo_bloque int [pk, increment]
+  codigo varchar(100) [not null]
+  nombre varchar(100) [not null]
+  descripcion text
+
+  indexes {
+    codigo [unique, name: 'uq_tipo_bloque_codigo']
+    nombre [unique, name: 'uq_tipo_bloque_nombre']
+  }
+}
+
+Table TipoArchivo {
+  id_tipo_archivo int [pk, increment]
+  codigo varchar(100) [not null]
+  nombre varchar(100) [not null]
+  descripcion text
+
+  indexes {
+    codigo [unique, name: 'uq_tipo_archivo_codigo']
+    nombre [unique, name: 'uq_tipo_archivo_nombre']
+  }
+}
+
+Table TipoPagina {
+  id_tipo_pagina int [pk, increment]
+  codigo varchar(100) [not null]
+  nombre varchar(100) [not null]
+  descripcion text
+
+  indexes {
+    codigo [unique, name: 'uq_tipo_pagina_codigo']
+    nombre [unique, name: 'uq_tipo_pagina_nombre']
+  }
+}
+
+Table TipoAccionHistorial {
+  id_tipo_accion_historial int [pk, increment]
+  codigo varchar(100) [not null]
+  nombre varchar(100) [not null]
+  descripcion text
+
+  indexes {
+    codigo [unique, name: 'uq_tipo_accion_historial_codigo']
+    nombre [unique, name: 'uq_tipo_accion_historial_nombre']
+  }
+}
+
+Table UnidadMedida {
+  id_unidad_medida int [pk, increment]
+  codigo varchar(100) [not null]
+  nombre varchar(100) [not null]
+  simbolo varchar(20)
+  descripcion text
+
+  indexes {
+    codigo [unique, name: 'uq_unidad_medida_codigo']
+    nombre [unique, name: 'uq_unidad_medida_nombre']
+  }
+}
+
+Table Categoria {
+  id_categoria int [pk, increment]
+  codigo varchar(100) [not null]
+  nombre varchar(255) [not null]
+  color varchar(7) [not null, default: '#6B7280']
+
+  indexes {
+    codigo [unique, name: 'uq_categoria_codigo']
+    nombre [unique, name: 'uq_categoria_nombre']
+  }
+}
+
+Table Usuario {
+  id_usuario int [pk, increment]
+  nombre varchar(255) [not null]
+  email varchar(255) [not null]
+  fecha_registro datetime [not null, default: `CURRENT_TIMESTAMP`]
+  contrasena varchar(255) [not null]
+  foto_perfil varchar(255)
+  about text
+  telefono varchar(30)
+  linktree varchar(255)
+  instagram varchar(100)
+  linkedin varchar(100)
+  id_rol int [not null]
+  id_estado_validacion_usuario int [not null]
+  id_estado_cuenta_usuario int [not null]
+
+  indexes {
+    email [unique, name: 'uq_usuario_email']
+    id_rol [name: 'idx_usuario_rol']
+    id_estado_validacion_usuario [name: 'idx_usuario_estado_validacion']
+    id_estado_cuenta_usuario [name: 'idx_usuario_estado_cuenta']
+  }
+}
+
+Table Proyecto {
+  id_proyecto int [pk, increment]
+  nombre varchar(255) [not null]
+  descripcion text
+  fecha_creacion datetime [not null, default: `CURRENT_TIMESTAMP`]
+  imagen varchar(255)
+  ubicacion varchar(255)
+  about text
+  objetivos json
+  comunidad text
+  operacion json
+  porcentaje_completacion decimal(5,2) [not null, default: 0.00]
+  datos_importados json
+  configuracion json
+  id_estado_proyecto int [not null]
+  id_pagina_home int
+  id_categoria int
+  id_usuario_lider int
+
+  indexes {
+    id_estado_proyecto [name: 'idx_proyecto_estado']
+    id_pagina_home [name: 'idx_proyecto_pagina_home']
+    id_categoria [name: 'idx_proyecto_categoria']
+    id_usuario_lider [name: 'idx_proyecto_usuario_lider']
+  }
+
+  checks {
+    `porcentaje_completacion >= 0 AND porcentaje_completacion <= 100` [name: 'chk_proyecto_porcentaje_completacion']
+  }
+}
+
+Table ProyectoUsuario {
+  id_proyecto_usuario int [pk, increment]
+  id_proyecto int [not null]
+  id_usuario int [not null]
+  fecha_vinculacion datetime [not null, default: `CURRENT_TIMESTAMP`]
+  fecha_desvinculacion datetime
+
+  indexes {
+    (id_proyecto, id_usuario, fecha_vinculacion) [unique, name: 'uq_proyecto_usuario_periodo']
+    id_usuario [name: 'idx_proyecto_usuario_usuario']
+  }
+
+  checks {
+    `fecha_desvinculacion IS NULL OR fecha_desvinculacion >= fecha_vinculacion` [name: 'chk_proyecto_usuario_periodo']
+  }
+}
+
+Table ArchivoUsuario {
+  id_archivo_usuario int [pk, increment]
+  ruta_archivo varchar(255) [not null]
+  fecha_carga datetime [not null, default: `CURRENT_TIMESTAMP`]
+  id_usuario int [not null]
+  id_tipo_archivo int [not null]
+  tipo_grafica TipoGrafica
+
+  indexes {
+    ruta_archivo [unique, name: 'uq_archivo_usuario_ruta']
+    id_usuario [name: 'idx_archivo_usuario_usuario']
+    id_tipo_archivo [name: 'idx_archivo_usuario_tipo']
+  }
+}
+
+Table Seccion {
+  id_seccion int [pk, increment]
+  nombre varchar(255) [not null]
+  slug varchar(255) [not null]
+  orden int [not null]
+  fecha_creacion datetime [not null, default: `CURRENT_TIMESTAMP`]
+  id_proyecto int
+  id_seccion_padre int
+  id_usuario_creador int [not null]
+
+  indexes {
+    (id_proyecto, id_seccion_padre, slug) [unique, name: 'uq_seccion_slug_hermano']
+    (id_proyecto, id_seccion_padre, orden) [unique, name: 'uq_seccion_orden_hermano']
+    id_proyecto [name: 'idx_seccion_proyecto']
+    id_seccion_padre [name: 'idx_seccion_padre']
+    id_usuario_creador [name: 'idx_seccion_usuario_creador']
+  }
+
+  checks {
+    `orden >= 0` [name: 'chk_seccion_orden']
+  }
+}
+
+Table Pagina {
+  id_pagina int [pk, increment]
+  titulo varchar(255) [not null]
+  slug varchar(255) [not null]
+  orden int [not null]
+  fecha_creacion datetime [not null, default: `CURRENT_TIMESTAMP`]
+  id_tipo_pagina int [not null]
+  id_seccion int [not null]
+  id_usuario_creador int [not null]
+  id_estado_pagina int [not null]
+
+  indexes {
+    (id_seccion, slug) [unique, name: 'uq_pagina_slug_seccion']
+    (id_seccion, orden) [unique, name: 'uq_pagina_orden_seccion']
+    id_tipo_pagina [name: 'idx_pagina_tipo']
+    id_usuario_creador [name: 'idx_pagina_usuario_creador']
+    id_estado_pagina [name: 'idx_pagina_estado']
+  }
+
+  checks {
+    `orden >= 0` [name: 'chk_pagina_orden']
+  }
+}
+
+Table PlantillaBloque {
+  id_plantilla_bloque int [pk, increment]
+  nombre varchar(255) [not null]
+  descripcion text
+  renderer_key varchar(100) [not null]
+  version int [not null, default: 1]
+  configuracion_base json
+  schema_configuracion json
+  id_tipo_bloque int [not null]
+
+  indexes {
+    (renderer_key, version) [unique, name: 'uq_plantilla_bloque_renderer_version']
+    id_tipo_bloque [name: 'idx_plantilla_bloque_tipo']
+  }
+
+  checks {
+    `version > 0` [name: 'chk_plantilla_bloque_version']
+  }
+}
+
+Table BloqueContenido {
+  id_bloque int [pk, increment]
+  orden int [not null]
+  configuracion json
+  contenido_texto longtext
+  fecha_creacion datetime [not null, default: `CURRENT_TIMESTAMP`]
+  id_pagina int [not null]
+  id_plantilla_bloque int [not null]
+
+  indexes {
+    (id_pagina, orden) [unique, name: 'uq_bloque_contenido_orden_pagina']
+    id_plantilla_bloque [name: 'idx_bloque_contenido_plantilla']
+  }
+
+  checks {
+    `orden >= 0` [name: 'chk_bloque_contenido_orden']
+  }
+}
+
+Table HistorialPagina {
+  id_historial_pagina int [pk, increment]
+  mensaje text [not null]
+  fecha_cambio datetime [not null, default: `CURRENT_TIMESTAMP`]
+  id_tipo_accion_historial int [not null]
+  id_pagina int [not null]
+  id_usuario int [not null]
+
+  indexes {
+    (id_pagina, fecha_cambio) [name: 'idx_historial_pagina_pagina_fecha']
+    id_usuario [name: 'idx_historial_pagina_usuario']
+    id_tipo_accion_historial [name: 'idx_historial_pagina_tipo']
+  }
+}
+
+Table KPI {
+  id_kpi int [pk, increment]
+  nombre varchar(255) [not null]
+  descripcion text
+  formula text
+  valor_meta decimal(18,4) [not null]
+  id_proyecto int [not null]
+  id_estado_kpi int [not null]
+  id_unidad_medida int
+
+  indexes {
+    id_proyecto [name: 'idx_kpi_proyecto']
+    id_estado_kpi [name: 'idx_kpi_estado']
+    id_unidad_medida [name: 'idx_kpi_unidad_medida']
+  }
+
+  checks {
+    `valor_meta > 0` [name: 'chk_kpi_valor_meta']
+  }
+}
+
+Table ResultadoKPI {
+  id_resultado_kpi int [pk, increment]
+  valor decimal(18,4) [not null]
+  fecha_resultado datetime [not null]
+  fecha_carga datetime [not null, default: `CURRENT_TIMESTAMP`]
+  metadatos json
+  id_kpi int [not null]
+  id_archivo_usuario int [not null]
+  id_usuario_registro int
+
+  indexes {
+    (id_kpi, fecha_resultado) [unique, name: 'uq_resultado_kpi_fecha']
+    id_archivo_usuario [name: 'idx_resultado_kpi_archivo']
+    id_usuario_registro [name: 'idx_resultado_kpi_usuario']
+  }
+}
+
+Table Publicacion {
+  id_publicacion int [pk, increment]
+  contenido text [not null]
+  fecha_publicacion datetime
+  id_usuario int [not null]
+  id_proyecto int [not null]
+  id_estado_publicacion int [not null]
+
+  indexes {
+    id_usuario [name: 'idx_publicacion_usuario']
+    (id_proyecto, fecha_publicacion) [name: 'idx_publicacion_proyecto_fecha']
+    id_estado_publicacion [name: 'idx_publicacion_estado']
+  }
+}
+
+Table PublicacionArchivo {
+  id_publicacion int [not null]
+  id_archivo_usuario int [not null]
+  orden int [not null]
+
+  indexes {
+    (id_publicacion, id_archivo_usuario) [pk]
+    (id_publicacion, orden) [unique, name: 'uq_publicacion_archivo_orden']
+    id_archivo_usuario [name: 'idx_publicacion_archivo_archivo']
+  }
+
+  checks {
+    `orden >= 0` [name: 'chk_publicacion_archivo_orden']
+  }
+}
+
+Table Evento {
+  id_evento int [pk, increment]
+  nombre varchar(255) [not null]
+  descripcion text
+  fecha_realizacion datetime [not null]
+  fecha_publicacion datetime
+  id_usuario_creador int [not null]
+  id_proyecto int [not null]
+  id_estado_evento int [not null]
+
+  indexes {
+    id_usuario_creador [name: 'idx_evento_usuario_creador']
+    (id_proyecto, fecha_realizacion) [name: 'idx_evento_proyecto_fecha']
+    id_estado_evento [name: 'idx_evento_estado']
+  }
+}
+
+Table Testimonio {
+  id_testimonio int [pk, increment]
+  fecha datetime [not null]
+  contenido text [not null]
+  tipo_participante varchar(50)
+  nombre_publico varchar(255)
+  fecha_revision datetime
+  id_usuario int
+  id_usuario_revisor int
+  id_proyecto int [not null]
+  id_estado_testimonio int [not null]
+
+  indexes {
+    id_usuario [name: 'idx_testimonio_usuario']
+    id_usuario_revisor [name: 'idx_testimonio_usuario_revisor']
+    (id_proyecto, fecha) [name: 'idx_testimonio_proyecto_fecha']
+    id_estado_testimonio [name: 'idx_testimonio_estado']
+  }
+
+  checks {
+    `fecha_revision IS NULL OR fecha_revision >= fecha` [name: 'chk_testimonio_fecha_revision']
+  }
+}
+
+Table UsuarioEvento {
+  id_usuario int [not null]
+  id_evento int [not null]
+
+  indexes {
+    (id_usuario, id_evento) [pk]
+    id_evento [name: 'idx_usuario_evento_evento']
+  }
+}
+
+Ref fk_usuario_rol: Usuario.id_rol > Rol.id_rol [delete: restrict, update: cascade]
+Ref fk_usuario_estado_validacion: Usuario.id_estado_validacion_usuario > EstadoValidacionUsuario.id_estado_validacion_usuario [delete: restrict, update: cascade]
+Ref fk_usuario_estado_cuenta: Usuario.id_estado_cuenta_usuario > EstadoCuentaUsuario.id_estado_cuenta_usuario [delete: restrict, update: cascade]
+
+Ref fk_proyecto_estado: Proyecto.id_estado_proyecto > EstadoProyecto.id_estado_proyecto [delete: restrict, update: cascade]
+Ref fk_proyecto_pagina_home: Proyecto.id_pagina_home > Pagina.id_pagina [delete: set null, update: cascade]
+Ref fk_proyecto_categoria: Proyecto.id_categoria > Categoria.id_categoria [delete: set null, update: cascade]
+Ref fk_proyecto_usuario_lider: Proyecto.id_usuario_lider > Usuario.id_usuario [delete: set null, update: cascade]
+
+Ref fk_proyecto_usuario_proyecto: ProyectoUsuario.id_proyecto > Proyecto.id_proyecto [delete: restrict, update: cascade]
+Ref fk_proyecto_usuario_usuario: ProyectoUsuario.id_usuario > Usuario.id_usuario [delete: restrict, update: cascade]
+
+Ref fk_archivo_usuario_usuario: ArchivoUsuario.id_usuario > Usuario.id_usuario [delete: restrict, update: cascade]
+Ref fk_archivo_usuario_tipo: ArchivoUsuario.id_tipo_archivo > TipoArchivo.id_tipo_archivo [delete: restrict, update: cascade]
+
+Ref fk_seccion_proyecto: Seccion.id_proyecto > Proyecto.id_proyecto [delete: restrict, update: cascade]
+Ref fk_seccion_padre: Seccion.id_seccion_padre > Seccion.id_seccion [delete: cascade, update: cascade]
+Ref fk_seccion_usuario_creador: Seccion.id_usuario_creador > Usuario.id_usuario [delete: restrict, update: cascade]
+
+Ref fk_pagina_seccion: Pagina.id_seccion > Seccion.id_seccion [delete: cascade, update: cascade]
+Ref fk_pagina_tipo: Pagina.id_tipo_pagina > TipoPagina.id_tipo_pagina [delete: restrict, update: cascade]
+Ref fk_pagina_usuario_creador: Pagina.id_usuario_creador > Usuario.id_usuario [delete: restrict, update: cascade]
+Ref fk_pagina_estado: Pagina.id_estado_pagina > EstadoPagina.id_estado_pagina [delete: restrict, update: cascade]
+
+Ref fk_plantilla_bloque_tipo: PlantillaBloque.id_tipo_bloque > TipoBloque.id_tipo_bloque [delete: restrict, update: cascade]
+
+Ref fk_bloque_contenido_pagina: BloqueContenido.id_pagina > Pagina.id_pagina [delete: cascade, update: cascade]
+Ref fk_bloque_contenido_plantilla: BloqueContenido.id_plantilla_bloque > PlantillaBloque.id_plantilla_bloque [delete: restrict, update: cascade]
+
+Ref fk_historial_pagina_tipo: HistorialPagina.id_tipo_accion_historial > TipoAccionHistorial.id_tipo_accion_historial [delete: restrict, update: cascade]
+Ref fk_historial_pagina_pagina: HistorialPagina.id_pagina > Pagina.id_pagina [delete: cascade, update: cascade]
+Ref fk_historial_pagina_usuario: HistorialPagina.id_usuario > Usuario.id_usuario [delete: restrict, update: cascade]
+
+Ref fk_kpi_proyecto: KPI.id_proyecto > Proyecto.id_proyecto [delete: restrict, update: cascade]
+Ref fk_kpi_estado: KPI.id_estado_kpi > EstadoKPI.id_estado_kpi [delete: restrict, update: cascade]
+Ref fk_kpi_unidad_medida: KPI.id_unidad_medida > UnidadMedida.id_unidad_medida [delete: restrict, update: cascade]
+
+Ref fk_resultado_kpi_kpi: ResultadoKPI.id_kpi > KPI.id_kpi [delete: cascade, update: cascade]
+Ref fk_resultado_kpi_archivo: ResultadoKPI.id_archivo_usuario > ArchivoUsuario.id_archivo_usuario [delete: restrict, update: cascade]
+Ref fk_resultado_kpi_usuario: ResultadoKPI.id_usuario_registro > Usuario.id_usuario [delete: restrict, update: cascade]
+
+Ref fk_publicacion_usuario: Publicacion.id_usuario > Usuario.id_usuario [delete: restrict, update: cascade]
+Ref fk_publicacion_proyecto: Publicacion.id_proyecto > Proyecto.id_proyecto [delete: restrict, update: cascade]
+Ref fk_publicacion_estado: Publicacion.id_estado_publicacion > EstadoPublicacion.id_estado_publicacion [delete: restrict, update: cascade]
+
+Ref fk_publicacion_archivo_publicacion: PublicacionArchivo.id_publicacion > Publicacion.id_publicacion [delete: cascade, update: cascade]
+Ref fk_publicacion_archivo_archivo: PublicacionArchivo.id_archivo_usuario > ArchivoUsuario.id_archivo_usuario [delete: restrict, update: cascade]
+
+Ref fk_evento_usuario_creador: Evento.id_usuario_creador > Usuario.id_usuario [delete: restrict, update: cascade]
+Ref fk_evento_proyecto: Evento.id_proyecto > Proyecto.id_proyecto [delete: restrict, update: cascade]
+Ref fk_evento_estado: Evento.id_estado_evento > EstadoEvento.id_estado_evento [delete: restrict, update: cascade]
+
+Ref fk_testimonio_usuario: Testimonio.id_usuario > Usuario.id_usuario [delete: restrict, update: cascade]
+Ref fk_testimonio_usuario_revisor: Testimonio.id_usuario_revisor > Usuario.id_usuario [delete: restrict, update: cascade]
+Ref fk_testimonio_proyecto: Testimonio.id_proyecto > Proyecto.id_proyecto [delete: restrict, update: cascade]
+Ref fk_testimonio_estado: Testimonio.id_estado_testimonio > EstadoTestimonio.id_estado_testimonio [delete: restrict, update: cascade]
+
+Ref fk_usuario_evento_usuario: UsuarioEvento.id_usuario > Usuario.id_usuario [delete: restrict, update: cascade]
+Ref fk_usuario_evento_evento: UsuarioEvento.id_evento > Evento.id_evento [delete: cascade, update: cascade]
